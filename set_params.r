@@ -2,7 +2,7 @@ set_params <- function() {
     # set parameters for model
     PhiKinSS <- 70/1440
     kgut <- 0.01
-    MKgutSS <- (0.9*PhiKinSS)/kgut
+    MKgutSS <- (0.9 * PhiKinSS) / kgut
     list(
         V_plasma = 4.5,
         V_inter = 10,
@@ -14,7 +14,7 @@ set_params <- function() {
         fecal_exc = 0.1,
         P_ECF = 0.3,
         FF = 0.250274,
-        MKgutSS = MKgutSS,
+        amt_gutSS = MKgutSS,
         Kecf_base = 4.2,
         GFR = 0.125,
         etapsKreab = 0.92,

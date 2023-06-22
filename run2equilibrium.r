@@ -9,7 +9,7 @@ source("varnames.r")
 
 kmod <- list(init = init_conds(),
             params = set_params(),
-            cmt = varnames(),
+            cmt = get_varnames(),
             model = model_eqns
             )
 
@@ -30,10 +30,9 @@ eql <- out[nrow(out),]
 print(kmod$init)
 print(eql)
 
+sprintf("Plasma [K]: %0.2f", eql$amt_plas/kmod$params$V_plas)
+sprintf("Interstitial [K]: %0.2f", eql$amt_inter/kmod$params$V_inter)
+sprintf("Muscle [K]: %0.2f", eql$amt_muscle/kmod$params$V_muscle)
 
-# names(out) # this will gives the names
-# nrow(out) # how many rows in data frame
-# dim(out) # dimension of data frame
-# out[n,] # gives row n
 
 # Plot trajectories

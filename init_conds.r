@@ -1,8 +1,8 @@
 init_conds <- function() {
     list(
-        MKgut = 4.375,
-        MKplas = 18.9282,
-        MKinter = 42.0626,
-        MKmuscle = 3103.8
+        amt_gut = 4.375,
+        amt_plas = 18.9282,
+        amt_inter = 42.0626,
+        amt_muscle = 3103.8
     )
 }

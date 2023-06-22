@@ -1,6 +1,6 @@
 get_varnames <- function() {
-    c("MKgut",
-    "MKplas",
-    "MKinter",
-    "MKmuscle")
+    c("amt_gut",
+    "amt_plas",
+    "amt_inter",
+    "amt_muscle")
 }
