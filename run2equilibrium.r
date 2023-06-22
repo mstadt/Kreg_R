@@ -13,7 +13,7 @@ kmod <- list(init = init_conds(),
             model = model_eqns
             )
 
-times <- seq(0, 5000, 0.1)
+times <- seq(0, 2000, 0.1)
 
 # Run the model
 out <- as.data.frame(lsoda(
@@ -26,7 +26,7 @@ out <- as.data.frame(lsoda(
                         )
                     )
 
-eql <- out[nrow(out),]
+eql <- subset(out[nrow(out),], select = -c(time))
 print(kmod$init)
 print(eql)
 
@@ -35,3 +35,19 @@ sprintf("Interstitial [K]: %0.3f", eql$amt_inter/kmod$params$V_inter)
 sprintf("Muscle [K]: %0.3f", eql$amt_muscle/kmod$params$V_muscle)
 
 # Plot trajectories
+## Optional plotting routine
+## REQUIRES loading of reshape and lattice libraries
+# print(xyplot(value~time|variable,
+#        data=melt(out,measure.vars=c(kmod$cmt),id.vars="time"),
+#        type='l',par.strip.text=list(cex=0.8),
+#        scales=list(y=list(relation='free')),
+#        xlab="Time",
+#        ylab="Variable"
+#        )
+# )
+plot(out[,'time'], out[,'amt_plas'])
+plot(out[,'time'], out[,'amt_gut'])
+plot(out[,'time'], out[,'amt_inter'])
+plot(out[,'time'], out[,'amt_muscle'])
+
+barplot(unlist(eql))
