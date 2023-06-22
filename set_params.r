@@ -3,6 +3,12 @@ set_params <- function() {
     PhiKinSS <- 70/1440
     kgut <- 0.01
     MKgutSS <- (0.9 * PhiKinSS) / kgut
+    KMuscleBase = 130
+    KECF_base <- 4.2
+    VMAX = 130
+    KM = 1.4
+    NKAbase = (VMAX*KECF_base)/(KM + KECF_base)
+    Pmuscle <- NKAbase/(KMuscleBase - KECF_base)
     list(
         V_plasma = 4.5,
         V_inter = 10,
@@ -15,7 +21,7 @@ set_params <- function() {
         P_ECF = 0.3,
         FF = 0.250274,
         amt_gutSS = MKgutSS,
-        Kecf_base = 4.2,
+        Kecf_base = KECF_base,
         GFR = 0.125,
         etapsKreab = 0.92,
         dtKsec_eq = 0.041,
@@ -28,8 +34,8 @@ set_params <- function() {
         A_insulin = 0.999789,
         B_insulin = 0.6645,
         t_insulin_ss = 270,
-        Vmax = 130,
-        Km = 1.4,
-        P_trans = 0.697
+        Vmax = VMAX,
+        Km = KM,
+        P_muscle = Pmuscle
     )
 }

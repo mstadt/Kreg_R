@@ -1,5 +1,4 @@
 model_eqns <- function(t, y, params) {
-
     # variable names
     amt_gut <- y[1]
     amt_plas <- y[2]
@@ -12,7 +11,7 @@ model_eqns <- function(t, y, params) {
         # options (NOTE: will need to find way to set options later)
         SS = 1
         do_FF = 1
-        do_insulin = 0
+        do_insulin = 1
         # concentrations
         Kplas = amt_plas/V_plasma
         Kinter = amt_inter/V_inter
@@ -39,8 +38,9 @@ model_eqns <- function(t, y, params) {
         Plas2ECF = P_ECF*(Kplas - Kinter)
 
         # GI FF effect
-        if (do_FF){
-            gamma_Kin = max(1,FF*(amt_gut - amt_gutSS))
+        if (do_FF) {
+            temp = FF * (amt_gut - amt_gutSS) + 1
+            gamma_Kin = max(1,temp)
         } else {
             gamma_Kin = 1
         }
@@ -95,7 +95,7 @@ model_eqns <- function(t, y, params) {
         eta_NKA = rho_insulin * rho_al
 
         Inter2Muscle = eta_NKA * ((Vmax * Kinter)/(Km + Kinter))
-        Muscle2Inter = P_trans * (Kmuscle - Kinter)
+        Muscle2Inter = P_muscle * (Kmuscle - Kinter)
 
         # d(amt_inter)/dt
         dydt[3] <- Plas2ECF - Inter2Muscle + Muscle2Inter

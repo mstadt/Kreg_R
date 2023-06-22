@@ -30,9 +30,8 @@ eql <- out[nrow(out),]
 print(kmod$init)
 print(eql)
 
-sprintf("Plasma [K]: %0.2f", eql$amt_plas/kmod$params$V_plas)
-sprintf("Interstitial [K]: %0.2f", eql$amt_inter/kmod$params$V_inter)
-sprintf("Muscle [K]: %0.2f", eql$amt_muscle/kmod$params$V_muscle)
-
+sprintf("Plasma [K]: %0.3f", eql$amt_plas/kmod$params$V_plas)
+sprintf("Interstitial [K]: %0.3f", eql$amt_inter/kmod$params$V_inter)
+sprintf("Muscle [K]: %0.3f", eql$amt_muscle/kmod$params$V_muscle)
 
 # Plot trajectories
