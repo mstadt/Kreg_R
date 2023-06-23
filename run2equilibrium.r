@@ -34,8 +34,8 @@ out <- as.data.frame(lsoda(
                             atol = 1e-10
                         )
                     )
-
-eql <- subset(out[nrow(out),], select = -c(time))
+eql <- as.list(tail(out, n=1))
+#eql <- subset(out[nrow(out),], select = -c(time))
 print(kmod$init)
 print(eql)
 
