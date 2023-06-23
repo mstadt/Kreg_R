@@ -37,6 +37,7 @@ lwgray = 2; lsgray = '--';
 x0 = dat1.time(1); xf = dat1.time(end);
 leglabs = {lab1, lab2, lab3};
 
+fprintf('making figs \n')
 %% Variables fig
 figure(1)
 clf
@@ -96,6 +97,15 @@ hold on
 plot(dat1.time, dat1.amt_plas/pars1.V_plasma,'linewidth',lw,'color',c1, 'linestyle',ls1)
 plot(dat2.time, dat2.amt_plas/pars2.V_plasma,'linewidth',lw,'color',c2, 'linestyle',ls2)
 plot(dat3.time, dat3.amt_plas/pars3.V_plasma,'linewidth',lw,'color',c3, 'linestyle',ls3)
+% load PrestonData
+PresDat = load('./PrestonData/23-Jun-2023_PrestonData.mat');
+markersize=15;
+errorbar(PresDat.time_serum, PresDat.MealKCL_serum_scaled, PresDat.MealKCL_serum_err,'.', 'markersize', markersize,'color',c1)
+plot(PresDat.time_serum, PresDat.MealKCL_serum_scaled, '.', 'markersize', markersize, 'color', c1)
+errorbar(PresDat.time_serum, PresDat.KCL_serum_scaled, PresDat.KCL_serum_err,'.', 'markersize', markersize,'color',c2)
+plot(PresDat.time_serum, PresDat.KCL_serum_scaled, '.', 'markersize', markersize, 'color', c2)
+errorbar(PresDat.time_serum, PresDat.Meal_serum_scaled, PresDat.Meal_serum_err,'.', 'markersize', markersize,'color',c3)
+plot(PresDat.time_serum, PresDat.Meal_serum_scaled, '.', 'markersize', markersize, 'color', c3)
 yline(3.5,'color',cgray,'linestyle',lsgray, 'linewidth', lwgray)
 yline(5.0,'color',cgray,'linestyle',lsgray, 'linewidth', lwgray)
 ylabel('[K^+]_{plasma}', 'fontsize', f.ylab)
