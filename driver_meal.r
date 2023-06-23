@@ -14,7 +14,7 @@ source("varnames.r")
 ## set options for simulation
 GI_FF     <- 1 # do GI FF effect
 Ins       <- 1 # do insulin effect
-K_amt     <- 35 # amount of K in meal (35 mEq is Preston exp)
+K_amt     <- 0 # amount of K in meal (35 mEq is Preston exp)
 MKX_opt   <- 0 # optional MK cross talk
 
 meal_time = 30 # time of meal
@@ -141,15 +141,21 @@ if (save_info) {
     sim_results <- rbind(outfast, outmeal, out_postmeal) # append sims to one df
     notes = readline(prompt = "notes for filename: ")
     today <- Sys.Date()
-    fname <- paste("./results/", today, "_MealSim_", "Kin-", toString(K_amt),
+    fname <- paste(today, "_MealSim_", "Kin-", toString(K_amt),
                     "_doIns-", toString(Ins),
                     "_notes-", notes,
                     sep = "")
-    fcsv <- paste(fname, ".csv", sep = "")
+    fcsv <- paste("./results/", fname, ".csv", sep = "")
     write.csv(sim_results, file = fcsv)
 
-    f1 <- paste(fname, ".RData", sep = "")
+    f1 <- paste("./results/", fname, ".RData", sep = "")
     save.image(file = f1) # save details of workspace
+
+    f2 <- paste("./results/", "params_", fname, ".csv", sep = "")
+    write.csv(as.data.frame(params), file = f2)
+
+    print("results saved to:")
+    print(sprintf("%s.csv", fname))
 }
 
 
