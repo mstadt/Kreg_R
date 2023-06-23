@@ -18,6 +18,26 @@ init_guess <- c(amtgut0,
                 amtmuscle0)
 
 params <- set_params()
-init_soln <- model_eqns(0, init_guess, params)
 
-ST <- stode(init_guess, time = 0, func = model_eqns, parms = params)
+set_opts <- list(SS = 1,
+                 doFF = 1,
+                 doins = 1,
+                 Kin = 0,
+                 MKX = 0)
+
+init_soln <- model_eqns(0, init_guess, params, set_opts)
+
+ST <- stode(init_guess, time = 0, func = model_eqns,
+                         parms = params, opts = set_opts)
+
+# SS solution obtained by stode
+ST$yconc <- list(Kplas = ST$y[2]/params$V_plasma,
+                 Kinter = ST$y[3]/params$V_inter,
+                 Kmuscle = ST$y[4]/params$V_muscle)
+print(ST$y)
+print(ST$yconc)
+
+sprintf("Steady state concentrations")
+sprintf("Plasma [K]: %0.3f", ST$yconc$Kplas)
+sprintf("Inter [K]:  %0.3f", ST$yconc$Kinter)
+sprintf("Muslce [K]: %0.3f", ST$yconc$Kmuscle)

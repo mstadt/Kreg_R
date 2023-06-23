@@ -1,4 +1,12 @@
-model_eqns <- function(t, y, params) {
+model_eqns <- function(t, y, params, opts) {
+    
+    # simulation settings
+    SS = opts$SS
+    do_FF = opts$doFF
+    do_insulin = opts$doins
+    MKX = opts$MKX
+    Kintake = opts$Kin
+
     # variable names
     amt_gut <- y[1]
     amt_plas <- y[2]
@@ -7,11 +15,6 @@ model_eqns <- function(t, y, params) {
 
     dydt <- c()
     with(params, {
-        # NOTE: will need to add options but lets to meal + kcl first
-        # options (NOTE: will need to find way to set options later)
-        SS = 1
-        do_FF = 1
-        do_insulin = 1
         # concentrations
         Kplas = amt_plas/V_plasma
         Kinter = amt_inter/V_inter
@@ -72,7 +75,6 @@ model_eqns <- function(t, y, params) {
         rho_al = (66.4 + 0.273 * C_al)/89.6050
 
         # insulin
-
         if (do_insulin){
             if (SS) {
                 t_insulin = t_insulin_ss

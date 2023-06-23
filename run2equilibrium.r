@@ -7,10 +7,18 @@ source("model_eqns.r")
 source("init_conds.r")
 source("varnames.r")
 
+## set options for simulation
+set_opts <- list(SS = 1,
+                 doFF = 1,
+                 doins = 1,
+                 Kin = 0,
+                 MKX = 0)
+
 kmod <- list(init = init_conds(),
             params = set_params(),
             cmt = get_varnames(),
-            model = model_eqns
+            model = model_eqns,
+            opts = set_opts
             )
 
 times <- seq(0, 2000, 0.1)
@@ -21,6 +29,7 @@ out <- as.data.frame(lsoda(
                             times,
                             kmod$model,
                             kmod$params,
+                            opts = kmod$opts,
                             rtol = 1e-10,
                             atol = 1e-10
                         )
@@ -45,9 +54,9 @@ sprintf("Muscle [K]: %0.3f", eql$amt_muscle/kmod$params$V_muscle)
 #        ylab="Variable"
 #        )
 # )
-plot(out[,'time'], out[,'amt_plas'])
-plot(out[,'time'], out[,'amt_gut'])
-plot(out[,'time'], out[,'amt_inter'])
-plot(out[,'time'], out[,'amt_muscle'])
+#plot(out[,'time'], out[,'amt_plas'])
+#plot(out[,'time'], out[,'amt_gut'])
+#plot(out[,'time'], out[,'amt_inter'])
+#plot(out[,'time'], out[,'amt_muscle'])
 
-barplot(unlist(eql))
+#barplot(unlist(eql))
