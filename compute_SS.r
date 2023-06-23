@@ -8,10 +8,10 @@ source("set_params.r")
 source("model_eqns.r")
 source("varnames.r")
 
-amtgut0 = 4.375
-amtplas0 = 18.796
-amtinter0 = 41.76168
-amtmuscle0 = 3105.964
+amtgut0 = 4.37500
+amtplas0 = 18.92818
+amtinter0 = 42.06262
+amtmuscle0 = 3123.72702
 
 init_guess <- c(amtgut0,
                 amtplas0,

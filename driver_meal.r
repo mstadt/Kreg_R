@@ -37,10 +37,10 @@ ST <- stode(init_guess, time = 0, func = model_eqns,
 ST$yconc <- list(Kplas = ST$y[2]/params$V_plasma,
                  Kinter = ST$y[3]/params$V_inter,
                  Kmuscle = ST$y[4]/params$V_muscle)
-sprintf("Steady state concentrations")
-sprintf("Plasma [K]: %0.3f", ST$yconc$Kplas)
-sprintf("Inter [K]:  %0.3f", ST$yconc$Kinter)
-sprintf("Muslce [K]: %0.3f", ST$yconc$Kmuscle)
+# print(sprintf("Steady state concentrations"))
+# print(sprintf("Plasma [K]: %0.3f", ST$yconc$Kplas))
+# print(sprintf("Inter [K]:  %0.3f", ST$yconc$Kinter))
+# print(sprintf("Muslce [K]: %0.3f", ST$yconc$Kmuscle))
 
 ## update IC with SS initial conditions
 IC$amt_gut <- ST$y[1]
@@ -116,7 +116,7 @@ kmod$opts$Kin = 0 # no more K intake
 
 kmod$init     = within(endpt_meal, rm("time"))
 
-outmeal_post <- as.data.frame(lsoda(
+out_postmeal <- as.data.frame(lsoda(
                             unlist(kmod$init[kmod$cmt]),
                             times,
                             kmod$model,
@@ -127,4 +127,6 @@ outmeal_post <- as.data.frame(lsoda(
                             )
                         )
 
-kmodmeal_post <- kmod # save kmod if want later
+kmod_postmeal <- kmod # save kmod if want later
+
+## Save results
