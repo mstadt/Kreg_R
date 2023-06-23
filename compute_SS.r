@@ -6,6 +6,7 @@
 library(rootSolve)
 source("set_params.r")
 source("model_eqns.r")
+source("varnames.r")
 
 amtgut0 = 4.375
 amtplas0 = 18.796

@@ -30,7 +30,7 @@ model_eqns <- function(t, y, params, opts) {
         if (SS) {
             Phi_Kin = Phi_Kin_ss
         } else {
-            Phi_Kin = 0
+            Phi_Kin = Kintake
         }
         K_intake = (1 - fecal_exc) * Phi_Kin
         Gut2plasma = kgut * amt_gut
@@ -90,6 +90,7 @@ model_eqns <- function(t, y, params, opts) {
             temp = (ins_A*(L/(1+exp(-k*(log10(C_insulin)-log10(x0)))))+ ins_B)/100
             rho_insulin = max(1.0, temp)
         } else {
+            # set insulin to SS amount
             C_insulin = 22.6/1000
             rho_insulin = 1
         }
