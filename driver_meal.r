@@ -72,10 +72,10 @@ outfast <- as.data.frame(lsoda(
                             opts = kmod$opts,
                             rtol = 1e-10,
                             atol = 1e-10
+                            )
                         )
-                    )
 
-outfast$time_shift <- outfast$time - tf
+outfast$time <- outfast$time - tf # shift time so 0 is the meal start
 
 endpt_fast <- as.list(tail(outfast, n=1)) # last row of outfast
 
@@ -117,16 +117,35 @@ kmod$opts$Kin = 0 # no more K intake
 kmod$init     = within(endpt_meal, rm("time"))
 
 out_postmeal <- as.data.frame(lsoda(
-                            unlist(kmod$init[kmod$cmt]),
-                            times,
-                            kmod$model,
-                            kmod$params,
-                            opts = kmod$opts,
-                            rtol = 1e-10,
-                            atol = 1e-10 
+                                unlist(kmod$init[kmod$cmt]),
+                                times,
+                                kmod$model,
+                                kmod$params,
+                                opts = kmod$opts,
+                                rtol = 1e-10,
+                                atol = 1e-10 
+                                )
                             )
-                        )
 
 kmod_postmeal <- kmod # save kmod if want later
 
 ## Save results
+# append simulation results
+save_info = as.integer(readline(prompt = 'do you want to save? '))
+if (save_info) {
+    sim_results <- rbind(outfast, outmeal, out_postmeal)
+    notes = readline(prompt = "notes for filename: ")
+    today <- Sys.Date()
+    fname <- paste("./results/", today, "_MealSim_", "Kin-", toString(K_amt),
+                    "_doIns-", toString(Ins),
+                    "_notes-", notes,
+                    sep = "")
+    fcsv <- paste(fname, ".csv", sep = "")
+    write.csv(sim_results, file = fcsv)
+
+    f1 <- paste(fname, ".RData", sep = "")
+    save.image(file = f1) # save details of workspace
+}
+
+
+
