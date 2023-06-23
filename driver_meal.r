@@ -34,9 +34,9 @@ set_opts <- list(SS = 1,
 ST <- stode(init_guess, time = 0, func = model_eqns,
                          parms = params, opts = set_opts)
 
-ST$yconc <- list(Kplas = ST$y[2]/params$V_plasma,
-                 Kinter = ST$y[3]/params$V_inter,
-                 Kmuscle = ST$y[4]/params$V_muscle)
+# ST$yconc <- list(Kplas = ST$y[2]/params$V_plasma,
+#                  Kinter = ST$y[3]/params$V_inter,
+#                  Kmuscle = ST$y[4]/params$V_muscle)
 # print(sprintf("Steady state concentrations"))
 # print(sprintf("Plasma [K]: %0.3f", ST$yconc$Kplas))
 # print(sprintf("Inter [K]:  %0.3f", ST$yconc$Kinter))
@@ -130,10 +130,9 @@ out_postmeal <- as.data.frame(lsoda(
 kmod_postmeal <- kmod # save kmod if want later
 
 ## Save results
-# append simulation results
 save_info = as.integer(readline(prompt = 'do you want to save? '))
 if (save_info) {
-    sim_results <- rbind(outfast, outmeal, out_postmeal)
+    sim_results <- rbind(outfast, outmeal, out_postmeal) # append sims to one df
     notes = readline(prompt = "notes for filename: ")
     today <- Sys.Date()
     fname <- paste("./results/", today, "_MealSim_", "Kin-", toString(K_amt),
