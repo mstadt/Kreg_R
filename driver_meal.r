@@ -1,5 +1,4 @@
 # Run a meal experiment based on given settings
-
 library(deSolve)
 library(rootSolve)
 
@@ -9,6 +8,9 @@ source("model_eqns.r")
 source("init_conds.r")
 source("varnames.r")
 
+##--------------------------
+#   Begin user input
+##--------------------------
 ## set options for simulation
 GI_FF     <- 1 # do GI FF effect
 Ins       <- 1 # do insulin effect
@@ -16,7 +18,9 @@ K_amt     <- 35 # amount of K in meal (35 mEq is Preston exp)
 MKX_opt   <- 0 # optional MK cross talk
 
 meal_time = 30 # time of meal
-
+##---------------------------
+#  End user input
+##---------------------------
 ## get initial condition (SS)
 IC <- init_conds()
 params <- set_params()
@@ -34,6 +38,12 @@ set_opts <- list(SS = 1,
 ST <- stode(init_guess, time = 0, func = model_eqns,
                          parms = params, opts = set_opts)
 
+## update IC with SS initial conditions
+IC$amt_gut <- ST$y[1]
+IC$amt_plas <- ST$y[2]
+IC$amt_inter <- ST$y[3]
+IC$amt_muscle <- ST$y[4]
+
 # ST$yconc <- list(Kplas = ST$y[2]/params$V_plasma,
 #                  Kinter = ST$y[3]/params$V_inter,
 #                  Kmuscle = ST$y[4]/params$V_muscle)
@@ -42,12 +52,8 @@ ST <- stode(init_guess, time = 0, func = model_eqns,
 # print(sprintf("Inter [K]:  %0.3f", ST$yconc$Kinter))
 # print(sprintf("Muslce [K]: %0.3f", ST$yconc$Kmuscle))
 
-## update IC with SS initial conditions
-IC$amt_gut <- ST$y[1]
-IC$amt_plas <- ST$y[2]
-IC$amt_inter <- ST$y[3]
-IC$amt_muscle <- ST$y[4]
 
+# Run simulations
 set_opts$SS = 0 # turn off SS option
 set_opts$doins = 0 # turn on insulin when giving meal w/ glucose
 set_opts$Kin = 0 # fasting state
