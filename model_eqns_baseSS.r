@@ -6,30 +6,16 @@ model_eqns_baseSS <- function(Time, State, Pars) {
     # amt_inter <- y[3]
     # amt_muscle <- y[4]
 
-    dydt <- c()
+    #dydt <- c()
     with(as.list(c(State, Pars)), {
 
         # set parameters that are fixed (not in Morris)
         amt_gutSS <- (0.9 * Phi_Kin_ss) / kgut
         NKAbase <- (Vmax*Kecf_base)/(Km + Kecf_base)
         P_muscle <- NKAbase/(KMuscleBase - Kecf_base)
-        m_K_ALDO = 0.5
-        ALD_eq = 85
-        fecal_exc = 0.1
-        P_ECF = 0.3
-        FF = 0.250274
-        GFR = 0.125
+        
+        fecal_exc = 0.1 # leave as fixed
         etapsKreab = 0.92
-        dtKsec_eq = 0.041
-        A_dtKsec = 0.3475
-        B_dtKsec = 0.23792
-        cdKsec_eq = 0.0022
-        A_cdKsec = 0.161275
-        B_cdKsec = 0.410711
-        A_cdKreab = 0.499994223625298
-        A_insulin = 0.999789
-        B_insulin = 0.6645
-
 
         # simulation settings
         SS = 1
