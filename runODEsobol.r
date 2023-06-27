@@ -102,7 +102,7 @@ Kmod_sobol = ODEsobol(mod = model_eqns_baseSS,
                                 times = mtimes,
                                 binf = parsbinf,
                                 bsup = parsbsup,
-                                r = 1000,
+                                n = 1000,
                                 parallel_eval = TRUE
                                 )
 end <- Sys.time()
