@@ -16,6 +16,7 @@ mtimes = c(0.0001, 1000, 2000, 3000)
 
 set.seed(1618)
 start <- Sys.time()
+print(start)
 Kmod_res_morris = ODEmorris(mod = model_eqns_baseSS,
                                 pars = testpars,
                                 state_init = parsinit,
@@ -24,4 +25,6 @@ Kmod_res_morris = ODEmorris(mod = model_eqns_baseSS,
                                 bsup = parsbsup
                                 )
 end <- Sys.time()
+print(end)
+
 print(difftime(end, start, units= "secs"))
