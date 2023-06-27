@@ -65,75 +65,175 @@ tvals_gut = get_time_vals(parnames, Tgut);
 % x-axis: mu_star
 % y-axis: sigma
 % time 4 plot, plasma
+times = Tplas("time", :);
 cmap = turbo(length(parnames));
 marksize=25; ms = '.';
 fx = 16; fy = 16; fleg = 12; ft = 18;
+dx = 0.1; dy = 0.1; % labels
+nrows = 2; ncols = 2;
+parnames_plt = cell(size(parnames));
+for ii = 1:length(parnames)
+    parnames_plt{ii} = change_parname(parnames(ii));
+end
 figure(1)
 clf
-mustar = tvals_plas(:, 4, 2);
+tpt = 4;
+% K gut
+subplot(nrows,ncols,1)
+mustar = tvals_gut(:, tpt, 2); 
+sigvals = tvals_gut(:, tpt, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), sigvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for K_{gut}", 'fontsize', ft)
+grid on
+
+% K plas
+subplot(nrows,ncols,2)
+mustar = tvals_plas(:, tpt, 2);
 %[sorted_mustar, inds] = sort(mustar); 
-sigvals = tvals_plas(:, 4, 3);
+sigvals = tvals_plas(:, tpt, 3);
 %sorted_sigvals = sigvals(inds); % sort by mustar vals
 hold on
 for ii = 1:length(parnames)
     plot(mustar(ii), sigvals(ii), ...
         'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
         'linestyle','none')
+    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-legend(parnames, 'fontsize',fleg)
 title("Morris Plot for K_{plasma}", 'fontsize', ft)
 grid on
 
-figure(2)
-clf
-mustar = tvals_gut(:, 4, 2); 
-sigvals = tvals_gut(:, 4, 3);
-hold on
-for ii = 1:length(parnames)
-    plot(mustar(ii), sigvals(ii), ...
-        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
-        'linestyle','none')
-end
-xlabel('\mu^*', 'fontsize', fx)
-ylabel('\sigma', 'fontsize', fy)
-legend(parnames, 'fontsize',fleg)
-title("Morris Plot for K_{gut}", 'fontsize', ft)
-grid on
 
-figure(3)
-clf
-mustar = tvals_inter(:, 4, 2); 
-sigvals = tvals_inter(:, 4, 3);
+% K inter
+subplot(nrows,ncols,3)
+mustar = tvals_inter(:, tpt, 2); 
+sigvals = tvals_inter(:, tpt, 3);
 hold on
 for ii = 1:length(parnames)
     plot(mustar(ii), sigvals(ii), ...
         'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
         'linestyle','none')
+    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-legend(parnames, 'fontsize',fleg)
 title("Morris Plot for K_{inter}", 'fontsize', ft)
 grid on
 
-figure(4)
-clf
-mustar = tvals_musc(:, 4, 2); 
-sigvals = tvals_musc(:, 4, 3);
+% K muscle
+subplot(nrows,ncols,4)
+mustar = tvals_musc(:, tpt, 2); 
+sigvals = tvals_musc(:, tpt, 3);
 hold on
 for ii = 1:length(parnames)
     plot(mustar(ii), sigvals(ii), ...
         'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
         'linestyle','none')
+    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-legend(parnames, 'fontsize',fleg)
 title("Morris Plot for K_{muscle}", 'fontsize', ft)
 grid on
 
+legend(parnames_plt, 'fontsize',fleg)
+
+sgtitle(['Time = ', num2str(times.time4)])
+
+
+figure(2)
+clf
+tpt = 2;
+% K gut
+subplot(nrows,ncols,1)
+mustar = tvals_gut(:, tpt, 2); 
+sigvals = tvals_gut(:, tpt, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), sigvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for K_{gut}", 'fontsize', ft)
+grid on
+
+% K plas
+subplot(nrows,ncols,2)
+mustar = tvals_plas(:, tpt, 2);
+%[sorted_mustar, inds] = sort(mustar); 
+sigvals = tvals_plas(:, tpt, 3);
+%sorted_sigvals = sigvals(inds); % sort by mustar vals
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), sigvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for K_{plasma}", 'fontsize', ft)
+grid on
+
+
+% K inter
+subplot(nrows,ncols,3)
+mustar = tvals_inter(:, tpt, 2); 
+sigvals = tvals_inter(:, tpt, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), sigvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for K_{inter}", 'fontsize', ft)
+grid on
+
+% K muscle
+subplot(nrows,ncols,4)
+mustar = tvals_musc(:, tpt, 2); 
+sigvals = tvals_musc(:, tpt, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), sigvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for K_{muscle}", 'fontsize', ft)
+grid on
+
+legend(parnames_plt, 'fontsize',fleg)
+
+sgtitle(['time = ', num2str(times.time2)])
+
+
+
+%%%% Top mustar values for plasma and muscle
+tpt = 2; % about the same for both time points
+mustar_plas = tvals_plas(:,tpt,2);
+[sort_mus_plas, inds_plas] = sort(mustar_plas, "descend");
+pnames_plas_sort = parnames(inds_plas);
+mustar_musc = tvals_musc(:,tpt,2);
+[sort_mus_musc, inds_musc] = sort(mustar_musc, "descend");
+pnames_mus_sort = parnames(inds_musc);
 %----------------------
 % functions used
 %----------------------
@@ -178,5 +278,46 @@ function mu_vals = get_mu(T, pname)
     nm = strcat('mu_', pname);
     vals = T(nm, :);
     mu_vals = [vals.time1; vals.time2; vals.time3; vals.time4];
+end
+
+%% plot parnames
+function pnew = change_parname(pname)
+    if strcmp(pname, "Phi_Kin_ss")
+        pnew = "Phi\_Kin\_ss";
+    elseif strcmp(pname, "Kecf_base")
+        pnew = "Kecf\_base";
+    elseif strcmp(pname, "V_plasma")
+        pnew = "V_{plasma}";
+    elseif strcmp(pname, "V_inter")
+        pnew = "V_{inter}";
+    elseif strcmp(pname, "V_muscle")
+        pnew = "V_{muscle}";
+    elseif strcmp(pname, "m_K_ALDO")
+        pnew = "m_K^{ALDO}";
+    elseif strcmp(pname, "ALD_eq")
+        pnew = "ALD_{eq}";
+    elseif strcmp(pname, "P_ECF")
+        pnew = "P_{ECF}";
+    elseif strcmp(pname, "dtKsec_eq")
+        pnew = "dtKsec_{eq}";
+    elseif strcmp(pname, "A_dtKsec")
+        pnew = "A_{dtKsec}";
+    elseif strcmp(pname, "B_dtKsec")
+        pnew = "B_{dtKsec}";
+    elseif strcmp(pname, "cdKsec_eq")
+        pnew = "cdKsec_{eq}";
+    elseif strcmp(pname, "A_cdKsec")
+        pnew = "A_{cdKsec}";
+    elseif strcmp(pname, "B_cdKsec")
+        pnew = "B_{cdKsec}";
+    elseif strcmp(pname, "A_cdKreab")
+        pnew = "A_{cdKreab}";
+    elseif strcmp(pname, "A_insulin")
+        pnew = "A_{insulin}";
+    elseif strcmp(pname, "B_insulin")
+        pnew = "B_{insulin}";
+    else
+        pnew = pname;
+    end
 end
 
