@@ -12,9 +12,10 @@ parsinit = c(amt_gut = 4.37500,
                 amt_plas = 18.92818,
                 amt_inter = 42.06262,
                 amt_muscle = 3123.72702)
-mtimes = c(0.0001, 500, 1000)
+mtimes = c(0.0001, 1000, 2000, 3000)
 
 set.seed(1618)
+start <- Sys.time()
 Kmod_res_morris = ODEmorris(mod = model_eqns_baseSS,
                                 pars = testpars,
                                 state_init = parsinit,
@@ -22,3 +23,5 @@ Kmod_res_morris = ODEmorris(mod = model_eqns_baseSS,
                                 binf = parsbinf,
                                 bsup = parsbsup
                                 )
+end <- Sys.time()
+print(difftime(end, start, units= "secs"))
