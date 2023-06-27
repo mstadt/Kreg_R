@@ -68,8 +68,9 @@ print(difftime(end, start, units= "secs"))
 save_info = 1
 if (save_info) {
     today <- Sys.Date()
-    fname <- paste(today, "_MorrisAnalysis_",
-                    "_time-", toString(end),
+    fname <- paste("./MorrisResults/",today, 
+                    "_MorrisAnalysis",
+                    ".RData",
                     sep = "")
     save.image(fname)
 
