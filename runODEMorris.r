@@ -73,7 +73,6 @@ if (save_info) {
                     ".RData",
                     sep = "")
     save.image(fname)
-
     print("results saved to:")
     print(sprintf("%s.RData", fname))
 }
