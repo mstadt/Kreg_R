@@ -57,6 +57,7 @@ parsbinf = c(50/1440, # Phi_Kin_ss
             0.75 * p$A_insulin, # A_insulin
             0.75 * p$B_insulin # B_insulin
             )
+            
 parsbsup = c(150 / 1440, #Phi_Kin_ss
             1.5 * p$kgut, # kgut
             140, # KMuscleBase, normal range
