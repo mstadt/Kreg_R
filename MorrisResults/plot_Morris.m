@@ -55,7 +55,84 @@ parnames = ["Phi_Kin_ss", ...
             "B_insulin" ...
             ];
 
+%% get values
+tvals_plas = get_time_vals(parnames, Tplas);
+tvals_musc = get_time_vals(parnames, Tmusc);
+tvals_inter = get_time_vals(parnames, Tint);
+tvals_gut = get_time_vals(parnames, Tgut);
 
+%% Make morris plot
+% x-axis: mu_star
+% y-axis: sigma
+% time 4 plot, plasma
+cmap = turbo(length(parnames));
+marksize=25; ms = '.';
+fx = 16; fy = 16; fleg = 12; ft = 18;
+figure(1)
+clf
+mustar = tvals_plas(:, 4, 2);
+%[sorted_mustar, inds] = sort(mustar); 
+sigvals = tvals_plas(:, 4, 3);
+%sorted_sigvals = sigvals(inds); % sort by mustar vals
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), sigvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+legend(parnames, 'fontsize',fleg)
+title("Morris Plot for K_{plasma}", 'fontsize', ft)
+grid on
+
+figure(2)
+clf
+mustar = tvals_gut(:, 4, 2); 
+sigvals = tvals_gut(:, 4, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), sigvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+legend(parnames, 'fontsize',fleg)
+title("Morris Plot for K_{gut}", 'fontsize', ft)
+grid on
+
+figure(3)
+clf
+mustar = tvals_inter(:, 4, 2); 
+sigvals = tvals_inter(:, 4, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), sigvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+legend(parnames, 'fontsize',fleg)
+title("Morris Plot for K_{inter}", 'fontsize', ft)
+grid on
+
+figure(4)
+clf
+mustar = tvals_musc(:, 4, 2); 
+sigvals = tvals_musc(:, 4, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), sigvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+legend(parnames, 'fontsize',fleg)
+title("Morris Plot for K_{muscle}", 'fontsize', ft)
+grid on
 
 %----------------------
 % functions used
@@ -68,8 +145,8 @@ function tvals = get_time_vals(parnames, T)
     for ii = 1:length(parnames)
         pname = parnames(ii);
         tvals(ii,:,1) = get_mu(T, pname);
-        tvals(ii,2) = get_mustar(T, pname);
-        tvals(ii,3) = get_sigma(T, pname);
+        tvals(ii,:,2) = get_mustar(T, pname);
+        tvals(ii,:,3) = get_sigma(T, pname);
     end
 end
 

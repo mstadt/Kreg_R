@@ -102,8 +102,7 @@ Kmod_sobol = ODEsobol(mod = model_eqns_baseSS,
                                 times = mtimes,
                                 binf = parsbinf,
                                 bsup = parsbsup,
-                                n = 1000,
-                                parallel_eval = TRUE
+                                n = 1000
                                 )
 end <- Sys.time()
 print(end)
@@ -113,8 +112,8 @@ print(difftime(end, start, units= "secs"))
 save_info = 1
 if (save_info) {
     today <- Sys.Date()
-    fname <- paste(today, 
-                    "_sobolAnalysis",
+    fname <- paste(today,
+                    "_SobolAnalysis",
                     ".RData",
                     sep = "")
     save.image(fname)
