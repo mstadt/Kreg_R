@@ -7,10 +7,7 @@ source("model_eqns_baseSS.r")
 
 p <- set_params()
 
-testpars = c("Phi_Kin_ss",
-            "kgut",
-            "KMuscleBase",
-            "Kecf_base",
+testpars = c("kgut",
             "Km",
             "Vmax",
             "V_plasma",
@@ -33,10 +30,7 @@ testpars = c("Phi_Kin_ss",
             )
 
 
-parsbinf = c(50/1440, # Phi_Kin_ss
-            0.5*p$kgut, # kgut
-            120, # KMuscleBase, normal range
-            3.5, # KECF_base, normal range
+parsbinf = c(0.5*p$kgut, # kgut
             0.8, # Km, Cheng gave
             0.75 * p$Vmax, # Vmax
             0.9 * p$V_plasma, # V_plasma
@@ -58,10 +52,7 @@ parsbinf = c(50/1440, # Phi_Kin_ss
             0.75 * p$B_insulin # B_insulin
             )
             
-parsbsup = c(150 / 1440, #Phi_Kin_ss
-            1.5 * p$kgut, # kgut
-            140, # KMuscleBase, normal range
-            5.0, # KECF_base, normal range
+parsbsup = c(1.5 * p$kgut, # kgut
             1.5, # Km, Cheng gave
             1.25 * p$Vmax, # Vmax
             1.1 * p$V_plasma, # V_plasma
@@ -82,8 +73,6 @@ parsbsup = c(150 / 1440, #Phi_Kin_ss
             1.25 * p$A_insulin, # A_insulin
             1.25 * p$B_insulin # B_insulin
             )
-
-
 
 init_cond = c(amt_gut = 4.37500,
                 amt_plas = 18.92818,

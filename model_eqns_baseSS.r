@@ -8,7 +8,10 @@ model_eqns_baseSS <- function(Time, State, Pars) {
 
     #dydt <- c()
     with(as.list(c(State, Pars)), {
-
+        KMuscleBase = 130
+        Kecf_base = 4.2
+        Phi_Kin_ss = 70/1440
+        
         # set parameters that are fixed (not in Morris)
         amt_gutSS <- (0.9 * Phi_Kin_ss) / kgut
         NKAbase <- (Vmax*Kecf_base)/(Km + Kecf_base)

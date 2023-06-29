@@ -7,8 +7,7 @@ source("mealmod_MealKCl.r")
 
 p <- set_params()
 
-testpars = c("Phi_Kin_ss", # this should be set
-            "kgut",
+testpars = c("kgut",
             "KMuscleBase", # this should be set
             "Kecf_base", # this should be set
             "Km",
@@ -33,8 +32,7 @@ testpars = c("Phi_Kin_ss", # this should be set
             )
 
 
-parsbinf = c(50/1440, # Phi_Kin_ss
-            0.5 * p$kgut, # kgut
+parsbinf = c(0.5 * p$kgut, # kgut
             120, # KMuscleBase, normal range
             3.5, # KECF_base, normal range
             0.8, # Km, Cheng gave
