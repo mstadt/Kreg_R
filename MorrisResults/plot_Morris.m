@@ -145,6 +145,7 @@ grid on
 legend(parnames_plt, 'fontsize',fleg)
 
 sgtitle(['SS Morris Analysis, Time = ', num2str(times.time4)])
+%sgtitle('SS Morris Analysis')
 
 
 figure(2)
@@ -220,6 +221,7 @@ grid on
 legend(parnames_plt, 'fontsize',fleg)
 
 sgtitle(['SS Morris Analysis, time = ', num2str(times.time2)])
+%sgtitle("SS Morris Analysis")
 
 
 
