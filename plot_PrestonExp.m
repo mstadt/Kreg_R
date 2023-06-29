@@ -4,19 +4,19 @@ clear all
 %% Import simulation data
 fprintf('loading data \n')
 % Meal + KCl
-fname1 = "2023-06-29_MealMod_MealKCl_notes-sepmodscripts.csv";
+fname1 = "2023-06-29_MealMod_MealKCl_notes-changeins.csv";
 dat1   = readtable(strcat("./results/",fname1));
-pars1  = readtable("./results/params_MealMod_notes-sepmodscripts.csv"); %readtable(strcat("./results/", "params_",fname1));
+pars1  = readtable("./results/params_MealMod_notes-changeins.csv"); %readtable(strcat("./results/", "params_",fname1));
 lab1   = "Meal + KCl";
 
 % KCl only
-fname2 = "2023-06-29_MealMod_KClOnly_notes-sepmodscripts.csv";
+fname2 = "2023-06-29_MealMod_KClOnly_notes-changeins.csv";
 dat2   = readtable(strcat("./results/",fname2));
 pars2  = pars1 ; %readtable(strcat("./results/", "params_",fname2));
 lab2   = 'KCl Only';
 
 % Meal only
-fname3 = "2023-06-29_MealMod_MealOnly_notes-sepmodscripts.csv";
+fname3 = "2023-06-29_MealMod_MealOnly_notes-changeins.csv";
 dat3   = readtable(strcat("./results/",fname3));
 pars3  = pars1; %readtable(strcat("./results/", "params_",fname3));
 lab3   = 'Meal Only';
