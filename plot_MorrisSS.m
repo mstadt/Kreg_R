@@ -1,41 +1,50 @@
 % Use this script to plot the Morris results
-%clear all;
+clear all;
 
 % Load data 
 date2save = "2023-06-29";
-notes = "newpars";
+notes = "conc";
+sim_type = "SS";
 
-%% amt_gut
+% amt_gut
 var = "amt_gut"
-fname = strcat(date2save, '_MorrisAnalysis_var-', var,...
+fname = strcat("./MorrisResults/", date2save, '_MorrisAnalysis',...
+            '_type-', sim_type,...
+            '_var-', var,...
             "_notes-", notes, ".csv");
 Tgut = readtable(fname, 'ReadRowNames',true);
 
-%% amt_plas
-var = "amt_plas"
-fname = strcat(date2save, '_MorrisAnalysis_var-', var,...
+% conc_plas
+var = "conc_plas"
+fname = strcat("./MorrisResults/", date2save, '_MorrisAnalysis',...
+            '_type-', sim_type,...
+            '_var-', var,...
             "_notes-", notes, ".csv");
 Tplas = readtable(fname,'ReadRowNames',true);
 
-%% amt_inter
-var = "amt_inter"
-fname = strcat(date2save, '_MorrisAnalysis_var-', var,...
+% conc_inter
+var = "conc_inter"
+fname = strcat("./MorrisResults/", date2save, '_MorrisAnalysis',...
+            '_type-', sim_type,...
+            '_var-', var,...
             "_notes-", notes, ".csv");
 Tint = readtable(fname,'ReadRowNames',true);
 
-%% amt_muscle
-var = "amt_muscle"
-fname = strcat(date2save, '_MorrisAnalysis_var-', var,...
+% conc_muscle
+var = "conc_muscle"
+fname = strcat("./MorrisResults/", date2save, '_MorrisAnalysis',...
+            '_type-', sim_type,...
+            '_var-', var,...
             "_notes-", notes, ".csv");
 Tmusc = readtable(fname,'ReadRowNames',true);
 
 %% parameter names list
-parnames = ["kgut", ...
-            "Km", ... 
-            "Vmax", ...
-            "V_plasma", ...
+parnames = ["V_plasma", ...
             "V_inter", ...
             "V_muscle", ...
+            "kgut", ...
+            "Km", ... 
+            "Vmax", ...
             "m_K_ALDO", ...
             "ALD_eq", ...
             "P_ECF", ...
@@ -66,15 +75,16 @@ times = Tplas("time", :);
 cmap = turbo(length(parnames));
 marksize=25; ms = '.';
 fx = 16; fy = 16; fleg = 12; ft = 18;
-dx = 0.1; dy = 0.1; % labels
+dx = 0.01; dy = 0.01; % labels
 nrows = 2; ncols = 2;
 parnames_plt = cell(size(parnames));
 for ii = 1:length(parnames)
     parnames_plt{ii} = change_parname(parnames(ii));
 end
+
 figure(1)
 clf
-tpt = 4;
+tpt = 5;
 % K gut
 subplot(nrows,ncols,1)
 mustar = tvals_gut(:, tpt, 2); 
@@ -88,7 +98,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{gut}", 'fontsize', ft)
+title("Morris Plot for M_{Kgut}", 'fontsize', ft)
 grid on
 
 % K plas
@@ -106,7 +116,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{plasma}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{plasma}", 'fontsize', ft)
 grid on
 
 
@@ -123,7 +133,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{inter}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{inter}", 'fontsize', ft)
 grid on
 
 % K muscle
@@ -139,18 +149,20 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{muscle}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{muscle}", 'fontsize', ft)
 grid on
 
 legend(parnames_plt, 'fontsize',fleg)
 
-sgtitle(['SS Morris Analysis, Time = ', num2str(times.time4)])
+temp = strcat('times.time', num2str(tpt));
+tval = eval(temp);
+sgtitle(['SS Morris Analysis, time = ', num2str(tval)])
 %sgtitle('SS Morris Analysis')
 
 
 figure(2)
 clf
-tpt = 2;
+tpt = 3;
 % K gut
 subplot(nrows,ncols,1)
 mustar = tvals_gut(:, tpt, 2); 
@@ -164,7 +176,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{gut}", 'fontsize', ft)
+title("Morris Plot for M_{Kgut}", 'fontsize', ft)
 grid on
 
 % K plas
@@ -182,7 +194,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{plasma}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{plasma}", 'fontsize', ft)
 grid on
 
 
@@ -199,7 +211,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{inter}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{inter}", 'fontsize', ft)
 grid on
 
 % K muscle
@@ -215,24 +227,18 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{muscle}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{muscle}", 'fontsize', ft)
 grid on
 
 legend(parnames_plt, 'fontsize',fleg)
 
-sgtitle(['SS Morris Analysis, time = ', num2str(times.time2)])
+temp = strcat('times.time', num2str(tpt));
+tval = eval(temp);
+sgtitle(['SS Morris Analysis, time = ', num2str(tval)])
 %sgtitle("SS Morris Analysis")
 
 
 
-%%%% Top mustar values for plasma and muscle
-tpt = 2; % about the same for both time points
-mustar_plas = tvals_plas(:,tpt,2);
-[sort_mus_plas, inds_plas] = sort(mustar_plas, "descend");
-pnames_plas_sort = parnames(inds_plas);
-mustar_musc = tvals_musc(:,tpt,2);
-[sort_mus_musc, inds_musc] = sort(mustar_musc, "descend");
-pnames_mus_sort = parnames(inds_musc);
 %----------------------
 % functions used
 %----------------------
@@ -240,7 +246,8 @@ pnames_mus_sort = parnames(inds_musc);
 
 %% get time vals
 function tvals = get_time_vals(parnames, T)
-    tvals = zeros(length(parnames), 4, 3); % 1: mu, 2: mu*, 3: sigma
+    ntimes = size(T.Properties.VariableNames, 2);
+    tvals = zeros(length(parnames), ntimes, 3); % 1: mu, 2: mu*, 3: sigma
     for ii = 1:length(parnames)
         pname = parnames(ii);
         tvals(ii,:,1) = get_mu(T, pname);
@@ -255,8 +262,13 @@ function sig_vals = get_sigma(T, pname)
     %   T - table
     %   pname - parameter name
     nm = strcat('sigma_', pname);
+    nt = size(T.Properties.VariableNames, 2);
     vals = T(nm, :);
-    sig_vals = [vals.time1; vals.time2; vals.time3; vals.time4];
+    sig_vals = zeros(nt,1);
+    for ii = 1:nt
+        temp = strcat('vals.time', num2str(ii));
+        sig_vals(ii) = eval(temp);
+    end
 end
 
 %% get mu star values
@@ -265,8 +277,13 @@ function mus_vals = get_mustar(T, pname)
     %   T - table
     %   pname - parameter name
     nm = strcat('mu.star_', pname);
+    nt = size(T.Properties.VariableNames, 2);
     vals = T(nm, :);
-    mus_vals = [vals.time1; vals.time2; vals.time3; vals.time4];
+    mus_vals = zeros(nt,1);
+    for ii = 1:nt
+        temp = strcat('vals.time', num2str(ii));
+        mus_vals(ii) = eval(temp);
+    end
 end
 
 %% get mu values
@@ -275,8 +292,13 @@ function mu_vals = get_mu(T, pname)
     %   T - table
     %   pname - parameter name
     nm = strcat('mu_', pname);
+    nt = size(T.Properties.VariableNames, 2);
     vals = T(nm, :);
-    mu_vals = [vals.time1; vals.time2; vals.time3; vals.time4];
+    mu_vals = zeros(nt, 1);
+    for ii = 1:nt
+        temp = strcat('vals.time', num2str(ii));
+        mu_vals(ii) = eval(temp);
+    end
 end
 
 %% plot parnames

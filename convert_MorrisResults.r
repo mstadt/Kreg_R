@@ -3,8 +3,8 @@
 # for making figures
 
 # file where Morris results are saved
-Rdat_fname = "./MorrisResults/2023-06-29_MorrisAnalysis_KClOnly_try1.RData"
-obj_type <- "KClOnly"
+Rdat_fname = "./MorrisResults/2023-06-29_MorrisAnalysis_SS_concresults.RData"
+obj_type <- "SS"
 load(Rdat_fname) # load data into workspace
 
 date_to_save <- Sys.Date()
@@ -22,8 +22,8 @@ save_fname = paste("./MorrisResults/",
                     sep = "")
 write.csv(Kmod_res_morris$amt_gut, file = save_fname)
 
-# amt_plas
-var <- "amt_plas"
+#conc_plas
+var <- "conc_plas"
 save_fname = paste("./MorrisResults/", 
                     date_to_save,
                     "_MorrisAnalysis",
@@ -32,10 +32,10 @@ save_fname = paste("./MorrisResults/",
                     "_notes-", notes,
                     ".csv",
                     sep = "")
-write.csv(Kmod_res_morris$amt_plas, file = save_fname)
+write.csv(Kmod_res_morris$conc_plas, file = save_fname)
 
-# amt_inter
-var <- "amt_inter"
+# conc_inter
+var <- "conc_inter"
 save_fname = paste("./MorrisResults/", 
                     date_to_save,
                     "_MorrisAnalysis",
@@ -44,10 +44,10 @@ save_fname = paste("./MorrisResults/",
                     "_notes-", notes,
                     ".csv",
                     sep = "")
-write.csv(Kmod_res_morris$amt_inter, file = save_fname)
+write.csv(Kmod_res_morris$conc_inter, file = save_fname)
 
-# amt_muscle
-var <- "amt_muscle"
+# conc_muscle
+var <- "conc_muscle"
 save_fname = paste("./MorrisResults/", 
                     date_to_save,
                     "_MorrisAnalysis",
@@ -56,4 +56,4 @@ save_fname = paste("./MorrisResults/",
                     "_notes-", notes,
                     ".csv",
                     sep = "")
-write.csv(Kmod_res_morris$amt_muscle, file = save_fname)
+write.csv(Kmod_res_morris$conc_muscle, file = save_fname)
