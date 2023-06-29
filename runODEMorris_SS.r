@@ -10,9 +10,6 @@ p <- set_params()
 testpars = c("kgut",
             "Km",
             "Vmax",
-            "V_plasma",
-            "V_inter",
-            "V_muscle",
             "m_K_ALDO",
             "ALD_eq",
             "P_ECF",
@@ -33,9 +30,6 @@ testpars = c("kgut",
 parsbinf = c(0.5*p$kgut, # kgut
             0.8, # Km, Cheng gave
             0.75 * p$Vmax, # Vmax
-            0.9 * p$V_plasma, # V_plasma
-            0.9 * p$V_inter, # V_inter
-            0.9 * p$V_muscle, # V_muscle
             0.5 * p$m_K_ALDO, # m_K_ALDO
             0.75 * p$ALD_eq, # ALD_eq
             0.5 * p$P_ECF, # P_ECF
@@ -55,9 +49,6 @@ parsbinf = c(0.5*p$kgut, # kgut
 parsbsup = c(1.5 * p$kgut, # kgut
             1.5, # Km, Cheng gave
             1.25 * p$Vmax, # Vmax
-            1.1 * p$V_plasma, # V_plasma
-            1.1 * p$V_inter, # V_inter
-            1.1 * p$V_muscle, # V_muscle
             1.5 * p$m_K_ALDO, # m_K_ALDO
             1.25 * p$ALD_eq, # ALD_eq
             1.5 * p$P_ECF, # P_ECF

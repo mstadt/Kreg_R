@@ -8,6 +8,9 @@ model_eqns_baseSS <- function(Time, State, Pars) {
 
     #dydt <- c()
     with(as.list(c(State, Pars)), {
+        V_plasma = 4.5
+        V_inter = 10
+        V_muscle = 24
         KMuscleBase = 130
         Kecf_base = 4.2
         Phi_Kin_ss = 70/1440
