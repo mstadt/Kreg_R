@@ -21,7 +21,7 @@ mealmod_MealKCl <- function(Time, State, Pars) {
         meal_start <- 100 + 6*60 # time meal starts
         meal_time <- 30 # meal duration
         # KCl only
-        if (Time < 100){
+        if (Time < 100) {
             SS <- 1
         } else {
             SS <- 0
