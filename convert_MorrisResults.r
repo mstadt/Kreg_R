@@ -3,7 +3,8 @@
 # for making figures
 
 # file where Morris results are saved
-Rdat_fname = "./MorrisResults/2023-06-29_MorrisAnalysis_SS.RData"
+Rdat_fname = "./MorrisResults/2023-06-29_MorrisAnalysis_KClOnly_try1.RData"
+obj_type <- "KClOnly"
 load(Rdat_fname) # load data into workspace
 
 date_to_save <- Sys.Date()
@@ -14,6 +15,7 @@ var <- "amt_gut"
 save_fname = paste("./MorrisResults/", 
                     date_to_save,
                     "_MorrisAnalysis",
+                    "_type-", obj_type,
                     "_var-", var,
                     "_notes-", notes,
                     ".csv",
@@ -25,6 +27,7 @@ var <- "amt_plas"
 save_fname = paste("./MorrisResults/", 
                     date_to_save,
                     "_MorrisAnalysis",
+                    "_type-", obj_type,
                     "_var-", var,
                     "_notes-", notes,
                     ".csv",
@@ -36,6 +39,7 @@ var <- "amt_inter"
 save_fname = paste("./MorrisResults/", 
                     date_to_save,
                     "_MorrisAnalysis",
+                    "_type-", obj_type,
                     "_var-", var,
                     "_notes-", notes,
                     ".csv",
@@ -47,6 +51,7 @@ var <- "amt_muscle"
 save_fname = paste("./MorrisResults/", 
                     date_to_save,
                     "_MorrisAnalysis",
+                    "_type-", obj_type,
                     "_var-", var,
                     "_notes-", notes,
                     ".csv",
