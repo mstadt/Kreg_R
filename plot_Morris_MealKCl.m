@@ -79,6 +79,7 @@ cmap = turbo(length(parnames));
 marksize=25; ms = '.';
 fx = 16; fy = 16; fleg = 12; ft = 18;
 dx = 0.1; dy = 0.1; % labels
+lw = 2;
 nrows = 2; ncols = 2;
 parnames_plt = cell(size(parnames));
 for ii = 1:length(parnames)
@@ -92,13 +93,13 @@ tpt = 3; % Meal start
 % K gut
 subplot(nrows,ncols,1)
 mustar = tvals_gut(:, tpt, 2); 
-sigvals = tvals_gut(:, tpt, 3);
+mustarvals = tvals_gut(:, tpt, 3);
 hold on
 for ii = 1:length(parnames)
-    plot(mustar(ii), sigvals(ii), ...
+    plot(mustar(ii), mustarvals(ii), ...
         'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
         'linestyle','none')
-    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
@@ -109,14 +110,14 @@ grid on
 subplot(nrows,ncols,2)
 mustar = tvals_plas(:, tpt, 2);
 %[sorted_mustar, inds] = sort(mustar); 
-sigvals = tvals_plas(:, tpt, 3);
+mustarvals = tvals_plas(:, tpt, 3);
 %sorted_sigvals = sigvals(inds); % sort by mustar vals
 hold on
 for ii = 1:length(parnames)
-    plot(mustar(ii), sigvals(ii), ...
+    plot(mustar(ii), mustarvals(ii), ...
         'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
         'linestyle','none')
-    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
@@ -127,13 +128,13 @@ grid on
 % K inter
 subplot(nrows,ncols,3)
 mustar = tvals_inter(:, tpt, 2); 
-sigvals = tvals_inter(:, tpt, 3);
+mustarvals = tvals_inter(:, tpt, 3);
 hold on
 for ii = 1:length(parnames)
-    plot(mustar(ii), sigvals(ii), ...
+    plot(mustar(ii), mustarvals(ii), ...
         'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
         'linestyle','none')
-    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
@@ -143,13 +144,13 @@ grid on
 % K muscle
 subplot(nrows,ncols,4)
 mustar = tvals_musc(:, tpt, 2); 
-sigvals = tvals_musc(:, tpt, 3);
+mustarvals = tvals_musc(:, tpt, 3);
 hold on
 for ii = 1:length(parnames)
-    plot(mustar(ii), sigvals(ii), ...
+    plot(mustar(ii), mustarvals(ii), ...
         'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
         'linestyle','none')
-    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
@@ -170,13 +171,13 @@ tpt = 11; % end of simulation
 % K gut 
 subplot(nrows,ncols,1)
 mustar = tvals_gut(:, tpt, 2); 
-sigvals = tvals_gut(:, tpt, 3);
+mustarvals = tvals_gut(:, tpt, 3);
 hold on
 for ii = 1:length(parnames)
-    plot(mustar(ii), sigvals(ii), ...
+    plot(mustar(ii), mustarvals(ii), ...
         'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
         'linestyle','none')
-    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
@@ -187,14 +188,14 @@ grid on
 subplot(nrows,ncols,2)
 mustar = tvals_plas(:, tpt, 2);
 %[sorted_mustar, inds] = sort(mustar); 
-sigvals = tvals_plas(:, tpt, 3);
+mustarvals = tvals_plas(:, tpt, 3);
 %sorted_sigvals = sigvals(inds); % sort by mustar vals
 hold on
 for ii = 1:length(parnames)
-    plot(mustar(ii), sigvals(ii), ...
+    plot(mustar(ii), mustarvals(ii), ...
         'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
         'linestyle','none')
-    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
@@ -205,13 +206,13 @@ grid on
 % K inter
 subplot(nrows,ncols,3)
 mustar = tvals_inter(:, tpt, 2); 
-sigvals = tvals_inter(:, tpt, 3);
+mustarvals = tvals_inter(:, tpt, 3);
 hold on
 for ii = 1:length(parnames)
-    plot(mustar(ii), sigvals(ii), ...
+    plot(mustar(ii), mustarvals(ii), ...
         'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
         'linestyle','none')
-    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
@@ -221,13 +222,13 @@ grid on
 % K muscle
 subplot(nrows,ncols,4)
 mustar = tvals_musc(:, tpt, 2); 
-sigvals = tvals_musc(:, tpt, 3);
+mustarvals = tvals_musc(:, tpt, 3);
 hold on
 for ii = 1:length(parnames)
-    plot(mustar(ii), sigvals(ii), ...
+    plot(mustar(ii), mustarvals(ii), ...
         'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
         'linestyle','none')
-    text(mustar(ii) + dx, sigvals(ii) + dy, parnames_plt{ii})
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
@@ -242,15 +243,115 @@ sgtitle(['Meal + KCl Morris Analysis, time = ', num2str(tval)])
 %sgtitle("SS Morris Analysis")
 
 
+%% time versus mu*
+figure(3)
+clf
+tvals = table2array(times);
+% K gut
+subplot(nrows, ncols,1)
+hold on
+for ii = 1:length(parnames)
+    mustarvals = tvals_gut(ii, :, 2);
+    plot(tvals, mustarvals, 'linewidth', lw, 'color', cmap(ii,:))
+end
+xlabel('time', 'fontsize',fx)
+ylabel('\mu^*', 'fontsize',fy)
+title("K_{gut}", 'fontsize',ft)
+grid on
 
-%%%% Top mustar values for plasma and muscle
-tpt = 2; % about the same for both time points
-mustar_plas = tvals_plas(:,tpt,2);
-[sort_mus_plas, inds_plas] = sort(mustar_plas, "descend");
-pnames_plas_sort = parnames(inds_plas);
-mustar_musc = tvals_musc(:,tpt,2);
-[sort_mus_musc, inds_musc] = sort(mustar_musc, "descend");
-pnames_mus_sort = parnames(inds_musc);
+% K plas
+subplot(nrows, ncols,2)
+hold on
+for ii = 1:length(parnames)
+    mustarvals = tvals_plas(ii, :, 2);
+    plot(tvals, mustarvals, 'linewidth', lw, 'color', cmap(ii,:))
+end
+xlabel('time', 'fontsize',fx)
+ylabel('\mu^*', 'fontsize',fy)
+title("K_{plas}", 'fontsize',ft)
+grid on
+
+% K inter
+subplot(nrows, ncols,3)
+hold on
+for ii = 1:length(parnames)
+    mustarvals = tvals_inter(ii, :, 2);
+    plot(tvals, mustarvals, 'linewidth', lw, 'color', cmap(ii,:))
+end
+xlabel('time', 'fontsize',fx)
+ylabel('\mu^*', 'fontsize',fy)
+title("K_{inter}", 'fontsize',ft)
+grid on
+
+% K muscle
+subplot(nrows, ncols,4)
+hold on
+for ii = 1:length(parnames)
+    mustarvals = tvals_musc(ii, :, 2);
+    plot(tvals, mustarvals, 'linewidth', lw, 'color', cmap(ii,:))
+end
+xlabel('time', 'fontsize',fx)
+ylabel('\mu^*', 'fontsize',fy)
+title("K_{muscle}", 'fontsize',ft)
+grid on
+
+legend(parnames_plt, 'fontsize',fleg)
+
+%% time versus sigma
+figure(4)
+clf
+tvals = table2array(times);
+% K gut
+subplot(nrows, ncols,1)
+hold on
+for ii = 1:length(parnames)
+    sigvals = tvals_gut(ii, :, 3);
+    plot(tvals, sigvals, 'linewidth', lw, 'color', cmap(ii,:))
+end
+xlabel('time', 'fontsize', fx)
+ylabel('\sigma', 'fontsize',fy)
+title("K_{gut}", 'fontsize',ft)
+grid on
+
+% K plas
+subplot(nrows, ncols,2)
+hold on
+for ii = 1:length(parnames)
+    sigvals = tvals_plas(ii, :, 3);
+    plot(tvals, sigvals, 'linewidth', lw, 'color', cmap(ii,:))
+end
+xlabel('time', 'fontsize', fx)
+ylabel('\sigma', 'fontsize',fy)
+title("K_{plas}", 'fontsize',ft)
+grid on
+
+% K inter
+subplot(nrows, ncols,3)
+hold on
+for ii = 1:length(parnames)
+    sigvals = tvals_inter(ii, :, 3);
+    plot(tvals, sigvals, 'linewidth', lw, 'color', cmap(ii,:))
+end
+xlabel('time', 'fontsize', fx)
+ylabel('\sigma', 'fontsize',fy)
+title("K_{inter}", 'fontsize',ft)
+grid on
+
+% K muscle
+subplot(nrows, ncols,4)
+hold on
+for ii = 1:length(parnames)
+    sigvals = tvals_musc(ii, :, 2);
+    plot(tvals, sigvals, 'linewidth', lw, 'color', cmap(ii,:))
+end
+xlabel('time', 'fontsize', fx)
+ylabel('\sigma', 'fontsize',fy)
+title("K_{muscle}", 'fontsize',ft)
+grid on
+
+legend(parnames_plt, 'fontsize',fleg)
+
+
 %----------------------
 % functions used
 %----------------------
