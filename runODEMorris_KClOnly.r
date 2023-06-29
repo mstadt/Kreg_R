@@ -3,6 +3,8 @@ library(ODEsensitivity)
 source("set_params.r")
 source("mealmod_KClOnly.r")
 
+p <- set_params()
+
 testpars = c("V_plasma",
             "V_inter",
             "V_muscle",
