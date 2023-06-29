@@ -81,13 +81,19 @@ init_cond = c(amt_gut = 4.37500,
                 amt_inter = 42.06262,
                 amt_muscle = 3123.72702)
 
-mtimes = c(0.0001, 2000, 3000, 5000)
+# important times to evaluate at
+        # 100 secs after SS
+        # start of meal (end of fasting)
+        # every 5 mins during meal
+        # after meal
+        # end of simulation
+mtimes = c(0.0001, 100, 460, 465, 470, 475, 480, 485, 490, 500, 1000)
 
 set.seed(151)
 start <- Sys.time()
 print(start)
 print('start morris method')
-Kmod_res_morris = ODEmorris(mod = model_eqns_baseSS,
+Kmod_res_morris = ODEmorris(mod = mealmod_MealKCl,
                                 pars = testpars,
                                 state_init = init_cond,
                                 times = mtimes,
@@ -105,7 +111,7 @@ save_info = 1
 if (save_info) {
     today <- Sys.Date()
     fname <- paste("./MorrisResults/",today, 
-                    "_MorrisAnalysis",
+                    "_MorrisAnalysis_MealKCl",
                     ".RData",
                     sep = "")
     save.image(fname)

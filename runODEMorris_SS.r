@@ -103,7 +103,7 @@ save_info = 1
 if (save_info) {
     today <- Sys.Date()
     fname <- paste("./MorrisResults/",today, 
-                    "_MorrisAnalysis",
+                    "_MorrisAnalysis_SS",
                     ".RData",
                     sep = "")
     save.image(fname)
