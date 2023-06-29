@@ -110,6 +110,22 @@ mealmod_MealKCl <- function(Time, State, Pars) {
             } else {
                 t_insulin = Time - meal_start
             }
+            get_ins <- function(t_insulin) {
+                # C_insulin units are in nanomole/L
+                if (t_insulin <= 0) {
+                    C_insulin <- 22.6/1000
+                } else if ((t_insulin > 0) & (t_insulin < 1.5*60)) {
+                    C_insulin <- ((325 - 22.6)/(1.5*60)*(t_insulin) + 22.6)/1000
+                } else if ((t_insulin >= 1.5*60) & (t_insulin < 6*60)) {
+                    C_insulin <- ((22.6-325)/((6-1.5)*60)*(t_insulin - 6*60)
+                                     + 22.6)/1000
+                } else if (t_insulin >= 6*60) {
+                    C_insulin <- 22.6/1000
+                } else {
+                    print("something went wrong in get_Cinsulin")
+                }
+            }
+
             C_insulin = get_ins(t_insulin)
             # set insulin to SS amount
             L = 100
@@ -141,19 +157,4 @@ mealmod_MealKCl <- function(Time, State, Pars) {
         return(list(c(dgut, dplas, dinter, dmuscle)))
     })
 
-}
-
-get_ins <- function(t_insulin) {
-    # C_insulin units are in nanomole/L
-    if (t_insulin <= 0) {
-        C_insulin <- 22.6/1000
-    } else if ((t_insulin > 0) & (t_insulin < 1.5*60)) {
-        C_insulin <- ((325 - 22.6)/(1.5*60)*(t_insulin) + 22.6)/1000
-    } else if ((t_insulin >= 1.5*60) & (t_insulin < 6*60)) {
-        C_insulin <- ((22.6-325)/((6-1.5)*60)*(t_insulin - 6*60) + 22.6)/1000
-    } else if (t_insulin >= 6*60) {
-        C_insulin <- 22.6/1000
-    } else {
-        print("something went wrong in get_Cinsulin")
-    }
 }

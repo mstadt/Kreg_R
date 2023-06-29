@@ -110,11 +110,11 @@ print(difftime(end, start, units= "secs"))
 save_info = 1
 if (save_info) {
     today <- Sys.Date()
-    fname <- paste("./MorrisResults/",today, 
+    fname <- paste(today,
                     "_MorrisAnalysis_MealKCl",
                     ".RData",
                     sep = "")
     save.image(fname)
     print("results saved to:")
-    print(sprintf("%s.RData", fname))
+    print(sprintf("%s", fname))
 }
