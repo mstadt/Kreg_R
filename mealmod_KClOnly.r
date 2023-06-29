@@ -1,16 +1,13 @@
 mealmod_KClOnly <- function(Time, State, Pars) {
 
-    # variable names
-    # amt_gut <- y[1]
-    # amt_plas <- y[2]
-    # amt_inter <- y[3]
-    # amt_muscle <- y[4]
+    # State variables
+    # amt_gut
+    # conc_plas
+    # conc_inter
+    # conc_muscle
 
     #dydt <- c()
     with(as.list(c(State, Pars)), {
-        V_plasma = 4.5
-        V_inter = 10
-        V_muscle = 24
         KMuscleBase = 130
         Kecf_base = 4.2
         Phi_Kin_ss = 70/1440
@@ -47,11 +44,9 @@ mealmod_KClOnly <- function(Time, State, Pars) {
             print(sprintf("Time = %f", Time))
             stop("Kintake not defined due to time error")
         }
-        # concentrations
-        Kplas = amt_plas/V_plasma
-        Kinter = amt_inter/V_inter
-        Kmuscle = amt_muscle/V_muscle
-        K_ECFtot = (amt_plas + amt_inter)/(V_plasma + V_inter)
+        # concentrationsr)
+        K_ECFtot = (conc_plas * V_plasma + 
+                conc_inter * V_inter) / (V_plasma + V_inter)
 
         # ALD
         N_al = exp(m_K_ALDO * (K_ECFtot - Kecf_base))
@@ -69,8 +64,8 @@ mealmod_KClOnly <- function(Time, State, Pars) {
         # d(amt_gut)/dt
         dgut <- K_intake - Gut2plasma
 
-        # amt_plas (Plasma K)
-        Plas2ECF = P_ECF*(Kplas - Kinter)
+        # conc_plas (Plasma K)
+        Plas2ECF = P_ECF*(conc_plas - conc_inter)
 
         # GI FF effect
         if (do_FF) {
@@ -81,7 +76,7 @@ mealmod_KClOnly <- function(Time, State, Pars) {
         }
 
         # renal K handling
-        filK = GFR * Kplas
+        filK = GFR * conc_plas
         psKreab = etapsKreab * filK
 
         # ALD impact
@@ -100,8 +95,8 @@ mealmod_KClOnly <- function(Time, State, Pars) {
 
         UrineK = dtK + cdKsec - cdKreab
 
-        # d(amt_plas)/dt
-        dplas <- Gut2plasma - Plas2ECF - UrineK
+        # d(conc_plas)/dt
+        dplas <- (1 / V_plasma) * (Gut2plasma - Plas2ECF - UrineK)
 
         # amt_inter (Interstitial K)
         rho_al = (66.4 + 0.273 * C_al)/89.6050
@@ -143,15 +138,15 @@ mealmod_KClOnly <- function(Time, State, Pars) {
 
         eta_NKA = rho_insulin * rho_al
 
-        Inter2Muscle = eta_NKA * ((Vmax * Kinter)/(Km + Kinter))
-        Muscle2Inter = P_muscle * (Kmuscle - Kinter)
+        Inter2Muscle = eta_NKA * ((Vmax * conc_inter)/(Km + conc_inter))
+        Muscle2Inter = P_muscle * (conc_muscle - conc_inter)
 
-        # d(amt_inter)/dt
-        dinter <- Plas2ECF - Inter2Muscle + Muscle2Inter
+        # d(conc_inter)/dt
+        dinter <- (1 / V_inter) * (Plas2ECF - Inter2Muscle + Muscle2Inter)
 
-        # amt_muscle (intracellular K)
-        # d(amt_muscle)/dt
-        dmuscle <- Inter2Muscle - Muscle2Inter
+        # conc_muscle (intracellular K)
+        # d(conc_muscle)/dt
+        dmuscle <- (1 / V_muscle) * (Inter2Muscle - Muscle2Inter)
 
         return(list(c(dgut, dplas, dinter, dmuscle)))
     })
