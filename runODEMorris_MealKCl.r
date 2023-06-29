@@ -1,13 +1,14 @@
 library(ODEsensitivity)
 
 source("set_params.r")
-#source("init_conds.r")
-#source("varnames.r")
 source("mealmod_MealKCl.r")
 
 p <- set_params()
 
-testpars = c("kgut",
+testpars = c("V_plasma",
+            "V_inter",
+            "V_muscle",
+            "kgut",
             "Km",
             "Vmax",
             "m_K_ALDO",
@@ -27,7 +28,10 @@ testpars = c("kgut",
             )
 
 
-parsbinf = c(0.5 * p$kgut, # kgut
+parsbinf = c(0.75 * p$V_plasma, # V_plasma
+            0.75 * p$V_inter, # V_inter
+            0.75 * p$V_muscle, # V_muscle
+            0.5 * p$kgut, # kgut
             0.8, # Km, Cheng gave
             0.75 * p$Vmax, # Vmax
             0.5 * p$m_K_ALDO, # m_K_ALDO
@@ -46,7 +50,10 @@ parsbinf = c(0.5 * p$kgut, # kgut
             0.75 * p$B_insulin # B_insulin
             )
             
-parsbsup = c(1.5 * p$kgut, # kgut
+parsbsup = c(1.25 * p$V_plasma, # V_plasma
+            1.25 * p$V_inter, # V_inter
+            1.25 * p$V_muscle, # V_muscle
+            1.5 * p$kgut, # kgut
             1.5, # Km, Cheng gave
             1.25 * p$Vmax, # Vmax
             1.5 * p$m_K_ALDO, # m_K_ALDO
@@ -65,12 +72,10 @@ parsbsup = c(1.5 * p$kgut, # kgut
             1.25 * p$B_insulin # B_insulin
             )
 
-
-
 init_cond = c(amt_gut = 4.37500,
-                amt_plas = 18.92818,
-                amt_inter = 42.06262,
-                amt_muscle = 3123.72702)
+                conc_plas = 18.92818 / p$V_plasma,
+                conc_inter = 42.06262 / p$V_inter,
+                conc_muscle = 3123.72702 / p$V_muscle)
 
 # important times to evaluate at
         # 100 secs after SS
