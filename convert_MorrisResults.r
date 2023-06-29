@@ -3,10 +3,10 @@
 # for making figures
 
 # file where Morris results are saved
-Rdat_fname = "./MorrisResults/2023-06-27_MorrisAnalysis_fullparams.RData"
+Rdat_fname = "./MorrisResults/2023-06-29_MorrisAnalysis_SS.RData"
 load(Rdat_fname) # load data into workspace
 
-date_to_save <- "2023-06-27"
+date_to_save <- Sys.Date()
 notes <- readline(prompt = "notes for filename: ")
 
 # amt_gut

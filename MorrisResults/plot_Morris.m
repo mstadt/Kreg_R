@@ -2,8 +2,8 @@
 %clear all;
 
 % Load data 
-date2save = "2023-06-27";
-notes = "fullpars";
+date2save = "2023-06-29";
+notes = "newpars";
 
 %% amt_gut
 var = "amt_gut"
@@ -30,10 +30,7 @@ fname = strcat(date2save, '_MorrisAnalysis_var-', var,...
 Tmusc = readtable(fname,'ReadRowNames',true);
 
 %% parameter names list
-parnames = ["Phi_Kin_ss", ...
-            "kgut", ...
-            "KMuscleBase", ...
-            "Kecf_base", ...
+parnames = ["kgut", ...
             "Km", ... 
             "Vmax", ...
             "V_plasma", ...
@@ -147,7 +144,7 @@ grid on
 
 legend(parnames_plt, 'fontsize',fleg)
 
-sgtitle(['Time = ', num2str(times.time4)])
+sgtitle(['SS Morris Analysis, Time = ', num2str(times.time4)])
 
 
 figure(2)
@@ -222,7 +219,7 @@ grid on
 
 legend(parnames_plt, 'fontsize',fleg)
 
-sgtitle(['time = ', num2str(times.time2)])
+sgtitle(['SS Morris Analysis, time = ', num2str(times.time2)])
 
 
 
@@ -282,10 +279,8 @@ end
 
 %% plot parnames
 function pnew = change_parname(pname)
-    if strcmp(pname, "Phi_Kin_ss")
-        pnew = "Phi\_Kin\_ss";
-    elseif strcmp(pname, "Kecf_base")
-        pnew = "Kecf\_base";
+    if strcmp(pname, "kgut")
+        pnew = "k_{gut}";
     elseif strcmp(pname, "V_plasma")
         pnew = "V_{plasma}";
     elseif strcmp(pname, "V_inter")
@@ -299,13 +294,13 @@ function pnew = change_parname(pname)
     elseif strcmp(pname, "P_ECF")
         pnew = "P_{ECF}";
     elseif strcmp(pname, "dtKsec_eq")
-        pnew = "dtKsec_{eq}";
+        pnew = "dt_{Ksec}^{eq}";
     elseif strcmp(pname, "A_dtKsec")
         pnew = "A_{dtKsec}";
     elseif strcmp(pname, "B_dtKsec")
         pnew = "B_{dtKsec}";
     elseif strcmp(pname, "cdKsec_eq")
-        pnew = "cdKsec_{eq}";
+        pnew = "cd_{Ksec}^{eq}";
     elseif strcmp(pname, "A_cdKsec")
         pnew = "A_{cdKsec}";
     elseif strcmp(pname, "B_cdKsec")
