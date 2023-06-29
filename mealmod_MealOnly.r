@@ -1,4 +1,7 @@
 mealmod_MealOnly <- function(Time, State, Pars) {
+    KMuscleBase = 130
+    Kecf_base = 4.2
+    Phi_Kin_ss = 70/1440
 
     # variable names
     # amt_gut <- y[1]

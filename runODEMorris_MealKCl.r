@@ -8,8 +8,6 @@ source("mealmod_MealKCl.r")
 p <- set_params()
 
 testpars = c("kgut",
-            "KMuscleBase", # this should be set
-            "Kecf_base", # this should be set
             "Km",
             "Vmax",
             "V_plasma",
@@ -33,8 +31,6 @@ testpars = c("kgut",
 
 
 parsbinf = c(0.5 * p$kgut, # kgut
-            120, # KMuscleBase, normal range
-            3.5, # KECF_base, normal range
             0.8, # Km, Cheng gave
             0.75 * p$Vmax, # Vmax
             0.9 * p$V_plasma, # V_plasma
@@ -56,10 +52,7 @@ parsbinf = c(0.5 * p$kgut, # kgut
             0.75 * p$B_insulin # B_insulin
             )
             
-parsbsup = c(150 / 1440, #Phi_Kin_ss
-            1.5 * p$kgut, # kgut
-            140, # KMuscleBase, normal range
-            5.0, # KECF_base, normal range
+parsbsup = c(1.5 * p$kgut, # kgut
             1.5, # Km, Cheng gave
             1.25 * p$Vmax, # Vmax
             1.1 * p$V_plasma, # V_plasma
