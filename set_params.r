@@ -36,6 +36,7 @@ set_params <- function() {
         t_insulin_ss = 270,
         Vmax = VMAX,
         Km = KM,
-        P_muscle = Pmuscle
+        P_muscle = Pmuscle,
+        KMuscleBase = KMuscleBase
     )
 }

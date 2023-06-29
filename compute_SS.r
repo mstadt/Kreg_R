@@ -8,6 +8,8 @@ source("set_params.r")
 source("model_eqns.r")
 source("varnames.r")
 
+
+# initial guess values
 amtgut0 = 4.37500
 amtplas0 = 18.92818
 amtinter0 = 42.06262
