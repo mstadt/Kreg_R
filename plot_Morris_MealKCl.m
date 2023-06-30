@@ -1,9 +1,9 @@
-% Use this script to plot the Morris results
+% Use this script to plot the Morris results for Meal+KCl experiment
 clear all;
 
 %% Load data 
-date2save = "2023-06-29";
-notes = "try1";
+date2save = "2023-06-30";
+notes = "conc";
 sim_type = "MealKCl";
 
 % amt_gut
@@ -15,8 +15,8 @@ fname = strcat("./MorrisResults/", ...
             "_notes-", notes, ".csv");
 Tgut = readtable(fname, 'ReadRowNames',true);
 
-% amt_plas
-var = "amt_plas"
+% conc_plas
+var = "conc_plas"
 fname = strcat("./MorrisResults/", ...
             date2save, '_MorrisAnalysis',...
             "_type-", sim_type, ...
@@ -24,8 +24,8 @@ fname = strcat("./MorrisResults/", ...
             "_notes-", notes, ".csv");
 Tplas = readtable(fname,'ReadRowNames',true);
 
-% amt_inter
-var = "amt_inter"
+% conc_inter
+var = "conc_inter"
 fname = strcat("./MorrisResults/", ...
             date2save, '_MorrisAnalysis',...
             "_type-", sim_type, ...
@@ -33,8 +33,8 @@ fname = strcat("./MorrisResults/", ...
             "_notes-", notes, ".csv");
 Tint = readtable(fname,'ReadRowNames',true);
 
-% amt_muscle
-var = "amt_muscle"
+% conc_muscle
+var = "conc_muscle"
 fname = strcat("./MorrisResults/", ...
             date2save, '_MorrisAnalysis',...
             "_type-", sim_type, ...
@@ -43,12 +43,12 @@ fname = strcat("./MorrisResults/", ...
 Tmusc = readtable(fname,'ReadRowNames',true);
 
 %% parameter names list
-parnames = ["kgut", ...
-            "Km", ... 
-            "Vmax", ...
-            "V_plasma", ...
+parnames = ["V_plasma", ...
             "V_inter", ...
             "V_muscle", ...
+            "kgut", ...
+            "Km", ... 
+            "Vmax", ...
             "m_K_ALDO", ...
             "ALD_eq", ...
             "P_ECF", ...
@@ -78,7 +78,7 @@ times = Tplas("time",:);
 cmap = turbo(length(parnames));
 marksize=25; ms = '.';
 fx = 16; fy = 16; fleg = 12; ft = 18;
-dx = 0.1; dy = 0.1; % labels
+dx = 0.01; dy = 0.01; % labels
 lw = 2;
 nrows = 2; ncols = 2;
 parnames_plt = cell(size(parnames));
@@ -86,7 +86,9 @@ for ii = 1:length(parnames)
     parnames_plt{ii} = change_parname(parnames(ii));
 end
 
-% Meal start
+%------------------------------------
+%% Meal start
+%------------------------------------
 figure(1)
 clf
 tpt = 3; % Meal start
@@ -103,7 +105,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{gut}", 'fontsize', ft)
+title("Morris Plot for M_{Kgut}", 'fontsize', ft)
 grid on
 
 % K plas
@@ -121,7 +123,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{plasma}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{plasma}", 'fontsize', ft)
 grid on
 
 
@@ -138,7 +140,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{inter}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{inter}", 'fontsize', ft)
 grid on
 
 % K muscle
@@ -154,7 +156,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{muscle}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{muscle}", 'fontsize', ft)
 grid on
 
 legend(parnames_plt, 'fontsize',fleg)
@@ -164,8 +166,168 @@ tval = eval(temp);
 sgtitle(['Meal + KCl Morris Analysis, Time = ', num2str(tval)])
 %sgtitle('SS Morris Analysis')
 
-
+%---------------------------------------
+%% Mid meal
+%---------------------------------------
 figure(2)
+clf
+tpt = 6; % mid meal
+% K gut 
+subplot(nrows,ncols,1)
+mustar = tvals_gut(:, tpt, 2); 
+mustarvals = tvals_gut(:, tpt, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), mustarvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for M_{Kgut}", 'fontsize', ft)
+grid on
+
+% K plas
+subplot(nrows,ncols,2)
+mustar = tvals_plas(:, tpt, 2);
+%[sorted_mustar, inds] = sort(mustar); 
+mustarvals = tvals_plas(:, tpt, 3);
+%sorted_sigvals = sigvals(inds); % sort by mustar vals
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), mustarvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for [K^+]_{plasma}", 'fontsize', ft)
+grid on
+
+
+% K inter
+subplot(nrows,ncols,3)
+mustar = tvals_inter(:, tpt, 2); 
+mustarvals = tvals_inter(:, tpt, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), mustarvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for [K^+]_{inter}", 'fontsize', ft)
+grid on
+
+% K muscle
+subplot(nrows,ncols,4)
+mustar = tvals_musc(:, tpt, 2); 
+mustarvals = tvals_musc(:, tpt, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), mustarvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for [K^+]_{muscle}", 'fontsize', ft)
+grid on
+
+legend(parnames_plt, 'fontsize',fleg)
+
+temp = strcat('times.time', num2str(tpt));
+tval = eval(temp);
+sgtitle(['Meal + KCl Morris Analysis, time = ', num2str(tval)])
+
+%--------------------------------------
+%% End of meal
+%--------------------------------------
+figure(3)
+clf
+tpt = 9; % end of meal
+% K gut 
+subplot(nrows,ncols,1)
+mustar = tvals_gut(:, tpt, 2); 
+mustarvals = tvals_gut(:, tpt, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), mustarvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for M_{Kgut}", 'fontsize', ft)
+grid on
+
+% K plas
+subplot(nrows,ncols,2)
+mustar = tvals_plas(:, tpt, 2);
+%[sorted_mustar, inds] = sort(mustar); 
+mustarvals = tvals_plas(:, tpt, 3);
+%sorted_sigvals = sigvals(inds); % sort by mustar vals
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), mustarvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for [K^+]_{plasma}", 'fontsize', ft)
+grid on
+
+
+% K inter
+subplot(nrows,ncols,3)
+mustar = tvals_inter(:, tpt, 2); 
+mustarvals = tvals_inter(:, tpt, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), mustarvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for [K^+]_{inter}", 'fontsize', ft)
+grid on
+
+% K muscle
+subplot(nrows,ncols,4)
+mustar = tvals_musc(:, tpt, 2); 
+mustarvals = tvals_musc(:, tpt, 3);
+hold on
+for ii = 1:length(parnames)
+    plot(mustar(ii), mustarvals(ii), ...
+        'markersize',marksize,'marker',ms,'color', cmap(ii,:), ...
+        'linestyle','none')
+    text(mustar(ii) + dx, mustarvals(ii) + dy, parnames_plt{ii})
+end
+xlabel('\mu^*', 'fontsize', fx)
+ylabel('\sigma', 'fontsize', fy)
+title("Morris Plot for [K^+]_{muscle}", 'fontsize', ft)
+grid on
+
+legend(parnames_plt, 'fontsize',fleg)
+
+temp = strcat('times.time', num2str(tpt));
+tval = eval(temp);
+sgtitle(['Meal + KCl Morris Analysis, time = ', num2str(tval)])
+
+%----------------------------------------
+%% end of simulation
+%----------------------------------------
+figure(5)
 clf
 tpt = 11; % end of simulation
 % K gut 
@@ -181,7 +343,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{gut}", 'fontsize', ft)
+title("Morris Plot for M_{Kgut}", 'fontsize', ft)
 grid on
 
 % K plas
@@ -199,7 +361,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{plasma}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{plasma}", 'fontsize', ft)
 grid on
 
 
@@ -216,7 +378,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{inter}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{inter}", 'fontsize', ft)
 grid on
 
 % K muscle
@@ -232,7 +394,7 @@ for ii = 1:length(parnames)
 end
 xlabel('\mu^*', 'fontsize', fx)
 ylabel('\sigma', 'fontsize', fy)
-title("Morris Plot for K_{muscle}", 'fontsize', ft)
+title("Morris Plot for [K^+]_{muscle}", 'fontsize', ft)
 grid on
 
 legend(parnames_plt, 'fontsize',fleg)
@@ -240,11 +402,10 @@ legend(parnames_plt, 'fontsize',fleg)
 temp = strcat('times.time', num2str(tpt));
 tval = eval(temp);
 sgtitle(['Meal + KCl Morris Analysis, time = ', num2str(tval)])
-%sgtitle("SS Morris Analysis")
 
 
 %% time versus mu*
-figure(3)
+figure(21)
 clf
 tvals = table2array(times);
 % K gut
@@ -256,7 +417,7 @@ for ii = 1:length(parnames)
 end
 xlabel('time', 'fontsize',fx)
 ylabel('\mu^*', 'fontsize',fy)
-title("K_{gut}", 'fontsize',ft)
+title("M_{Kgut}", 'fontsize',ft)
 grid on
 
 % K plas
@@ -268,7 +429,7 @@ for ii = 1:length(parnames)
 end
 xlabel('time', 'fontsize',fx)
 ylabel('\mu^*', 'fontsize',fy)
-title("K_{plas}", 'fontsize',ft)
+title("[K^+]_{plas}", 'fontsize',ft)
 grid on
 
 % K inter
@@ -280,7 +441,7 @@ for ii = 1:length(parnames)
 end
 xlabel('time', 'fontsize',fx)
 ylabel('\mu^*', 'fontsize',fy)
-title("K_{inter}", 'fontsize',ft)
+title("[K^+]_{inter}", 'fontsize',ft)
 grid on
 
 % K muscle
@@ -292,13 +453,15 @@ for ii = 1:length(parnames)
 end
 xlabel('time', 'fontsize',fx)
 ylabel('\mu^*', 'fontsize',fy)
-title("K_{muscle}", 'fontsize',ft)
+title("[K^+]_{muscle}", 'fontsize',ft)
 grid on
 
 legend(parnames_plt, 'fontsize',fleg)
 
+sgtitle('Morris Analysis Meal + KCl')
+
 %% time versus sigma
-figure(4)
+figure(20)
 clf
 tvals = table2array(times);
 % K gut
@@ -310,7 +473,7 @@ for ii = 1:length(parnames)
 end
 xlabel('time', 'fontsize', fx)
 ylabel('\sigma', 'fontsize',fy)
-title("K_{gut}", 'fontsize',ft)
+title("M_{Kgut}", 'fontsize',ft)
 grid on
 
 % K plas
@@ -322,7 +485,7 @@ for ii = 1:length(parnames)
 end
 xlabel('time', 'fontsize', fx)
 ylabel('\sigma', 'fontsize',fy)
-title("K_{plas}", 'fontsize',ft)
+title("[K^+]_{plas}", 'fontsize',ft)
 grid on
 
 % K inter
@@ -334,7 +497,7 @@ for ii = 1:length(parnames)
 end
 xlabel('time', 'fontsize', fx)
 ylabel('\sigma', 'fontsize',fy)
-title("K_{inter}", 'fontsize',ft)
+title("[K^+]_{inter}", 'fontsize',ft)
 grid on
 
 % K muscle
@@ -346,12 +509,12 @@ for ii = 1:length(parnames)
 end
 xlabel('time', 'fontsize', fx)
 ylabel('\sigma', 'fontsize',fy)
-title("K_{muscle}", 'fontsize',ft)
+title("[K^+]_{muscle}", 'fontsize',ft)
 grid on
 
 legend(parnames_plt, 'fontsize',fleg)
 
-
+sgtitle('Morris Analysis Meal + KCl')
 %----------------------
 % functions used
 %----------------------
