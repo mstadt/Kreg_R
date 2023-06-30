@@ -1,7 +1,7 @@
 library(ODEsensitivity)
 
 source("set_params.r")
-source("model_eqns_baseSS.r")
+source("mealmod_MealKCl.r")
 
 p <- set_params()
 
@@ -13,13 +13,14 @@ init_cond = c(amt_gut = 4.37500,
                 conc_inter = 42.06262 / p$V_inter,
                 conc_muscle = 3123.72702 / p$V_muscle)
 
-mtimes = c(0.0001, 500, 2000, 3000, 5000)
+# evaluate every 10 minutes
+mtimes = seq(10,1000,10) 
 
 set.seed(151)
 start <- Sys.time()
 print(start)
 print('start morris method')
-Kmod_res_morris = ODEmorris(mod = model_eqns_baseSS,
+Kmod_res_morris = ODEmorris(mod = mealmod_MealKCl,
                                 pars = testpars,
                                 state_init = init_cond,
                                 times = mtimes,
@@ -36,8 +37,8 @@ print(difftime(end, start, units= "secs"))
 save_info = 1
 if (save_info) {
     today <- Sys.Date()
-    fname <- paste(today, 
-                    "_MorrisAnalysis_SS",
+    fname <- paste(today,
+                    "_MorrisAnalysis_MealKCl_longtimes",
                     ".RData",
                     sep = "")
     save.image(fname)
