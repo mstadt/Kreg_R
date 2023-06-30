@@ -38,7 +38,7 @@ save_info = 1
 if (save_info) {
     today <- Sys.Date()
     fname <- paste(today,
-                    "_MorrisAnalysis_MealKCl",
+                    "_MorrisAnalysis_MealKCl_longtimes",
                     ".RData",
                     sep = "")
     save.image(fname)
