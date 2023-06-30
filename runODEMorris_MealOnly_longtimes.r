@@ -14,7 +14,7 @@ init_cond = c(amt_gut = 4.37500,
                 conc_muscle = 3123.72702 / p$V_muscle)
 
 # evaluate every 10 minutes
-mtimes = seq(10,1000,10) 
+mtimes = seq(10,1000,10)
 
 set.seed(151)
 start <- Sys.time()
