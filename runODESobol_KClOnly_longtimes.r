@@ -1,7 +1,7 @@
 library(ODEsensitivity)
 
 source("set_params.r")
-source("mealmod_MealKCl.r")
+source("mealmod_KClOnly.r")
 
 p <- set_params()
 
@@ -20,7 +20,7 @@ set.seed(151)
 start <- Sys.time()
 print(start)
 print('start sobol method')
-Kmod_res_sobol = ODEsobol(mod = mealmod_MealKCl,
+Kmod_res_sobol = ODEsobol(mod = mealmod_KClOnly,
                                 pars = testpars,
                                 state_init = init_cond,
                                 times = mtimes,
@@ -38,7 +38,7 @@ save_info = 1
 if (save_info) {
     today <- Sys.Date()
     fname <- paste(today,
-                    "_SobolAnalysis_MealKCl_longtimes",
+                    "_SobolAnalysis_KClOnly_longtimes",
                     ".RData",
                     sep = "")
     save.image(fname)
@@ -46,4 +46,4 @@ if (save_info) {
     print(sprintf("%s", fname))
 }
 
-print(difftime(end, start, units= "mins"))
+print(difftime(end, start, units = "mins"))
