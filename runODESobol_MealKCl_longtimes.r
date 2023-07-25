@@ -6,7 +6,7 @@ source("mealmod_MealKCl.r")
 p <- set_params()
 
 # get testpars, parsbinf, parsbsup
-source("set_morris.r")
+source("set_sobol.r") #
 
 init_cond = c(amt_gut = 4.37500,
                 conc_plas = 18.92818 / p$V_plasma,
@@ -26,8 +26,10 @@ Kmod_res_sobol = ODEsobol(mod = mealmod_MealKCl,
                                 times = mtimes,
                                 binf = parsbinf,
                                 bsup = parsbsup,
-                                r = 1000,
-                                parallel_eval = TRUE
+                                n = 1000,
+                                rfuncs = "runif",
+                                rargs = paste0("min = ", parsbinf,
+                                                ", max = ", parsbsup)
                                 )
 end <- Sys.time()
 print(end)
