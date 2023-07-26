@@ -20,6 +20,7 @@ set.seed(151)
 start <- Sys.time()
 print(start)
 print('start sobol method')
+print('NOTE: this may take a while')
 Kmod_res_sobol = ODEsobol(mod = mealmod_KClOnly,
                                 pars = testpars,
                                 state_init = init_cond,
