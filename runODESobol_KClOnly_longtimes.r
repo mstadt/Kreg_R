@@ -26,7 +26,7 @@ Kmod_res_sobol = ODEsobol(mod = mealmod_KClOnly,
                                 times = mtimes,
                                 binf = parsbinf,
                                 bsup = parsbsup,
-                                n = 1000,
+                                n = 10000,
                                 rfuncs = "runif",
                                 rargs = paste0("min = ", parsbinf,
                                                 ", max = ", parsbsup)
