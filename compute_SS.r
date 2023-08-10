@@ -5,42 +5,40 @@
 
 library(rootSolve)
 source("set_params.r")
-source("model_eqns.r")
-source("varnames.r")
+source("model_eqns_baseSS.r")
+#source("varnames.r")
 
 
 # initial guess values
-amtgut0 = 4.37500
-amtplas0 = 18.92818
-amtinter0 = 42.06262
-amtmuscle0 = 3123.72702
+amtgut0 <- 4.37500
+conc_plas0 <- 4.206262
+conc_inter0 <- 4.206262
+conc_muscle0 <- 130.1553
 
-init_guess <- c(amtgut0,
-                amtplas0,
-                amtinter0,
-                amtmuscle0)
+init_guess <- c(amt_gut = amtgut0,
+                conc_plas = conc_plas0,
+                conc_inter = conc_inter0,
+                conc_muscle = conc_muscle0)
 
 params <- set_params()
 
-set_opts <- list(SS = 1,
-                 doFF = 1,
-                 doins = 1,
-                 Kin = 0,
-                 MKX = 0)
+# set_opts <- list(SS = 1,
+#                  doFF = 1,
+#                  doins = 1,
+#                  Kin = 0,
+#                  MKX = 0)
 
-init_soln <- model_eqns(0, init_guess, params, set_opts)
+#init_soln <- model_eqns(0, init_guess, params, set_opts)
+init_soln <- model_eqns_baseSS(0, init_guess, params)
 
-ST <- stode(init_guess, time = 0, func = model_eqns,
-                         parms = params, opts = set_opts)
+ST <- stode(init_guess, time = 0, func = model_eqns_baseSS,
+                parms = params)
+# ST <- stode(init_guess, time = 0, func = model_eqns_baseSS,
+#                          parms = params, opts = set_opts)
 
 # SS solution obtained by stode
-ST$yconc <- list(Kplas = ST$y[2]/params$V_plasma,
-                 Kinter = ST$y[3]/params$V_inter,
-                 Kmuscle = ST$y[4]/params$V_muscle)
+# ST$yconc <- list(Kplas = ST$y[2]/params$V_plasma,
+#                  Kinter = ST$y[3]/params$V_inter,
+#                  Kmuscle = ST$y[4]/params$V_muscle)
 print(ST$y)
-print(ST$yconc)
-
-sprintf("Steady state concentrations")
-sprintf("Plasma [K]: %0.3f", ST$yconc$Kplas)
-sprintf("Inter [K]:  %0.3f", ST$yconc$Kinter)
-sprintf("Muslce [K]: %0.3f", ST$yconc$Kmuscle)
+#print(ST$yconc)
