@@ -18,7 +18,7 @@ computeSS_plasconc <- function(X) {
 
     res_per_par <- sapply(1:nrow(X), one_par, simplify = TRUE)
     res_per_state <- aperm(res_per_par)
-    # dimnames(res_per_state) <- list(NULL, names(init_guess))
+    dimnames(res_per_state) <- list(NULL, names(init_guess))
     plas_conc_vals <- res_per_state[,2]
     print('warning: only doing plasma conc!')
     return(plas_conc_vals)

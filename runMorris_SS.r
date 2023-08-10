@@ -19,9 +19,14 @@ plasconc_SS_morris <- morris(model = computeSS_plasconc,
                                             grid.jump = 1),
                             binf = parsbinf,
                             bsup = parsbsup)
+# NOTE: can used plasconc_SS_morris$ee to get the elementary effects
+# NOTE: I can get X by using plasconc_SS_morris$X
+
 
 
 ## Yay! This is working here! :)
+# this one gives mu, mu.star and sigma for each of the parameters
+# based on all of the variables
 all_SS_morris <- morrisMultOut(model = computeSS_all,
                             factors = testpars,
                             r = 100,
@@ -30,3 +35,5 @@ all_SS_morris <- morrisMultOut(model = computeSS_all,
                                             grid.jump = 1),
                             binf = parsbinf,
                             bsup = parsbsup)
+# use all_SS_morris$ee to get elementary effects
+# use all_SS_morris$X to get X for the factors
