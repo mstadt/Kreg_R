@@ -27,7 +27,7 @@ model_eqns_baseSS <- function(Time, State, Pars) {
 
         SS <- 1 # steady state
         do_FF <- 1
-        do_insulin <- 1 # KCl only
+        do_insulin <- 1 # 
         MKX <- 0
         Kintake = Phi_Kin_ss
         # concentrationsr)
