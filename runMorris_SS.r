@@ -25,7 +25,8 @@ x_plasconc <- morris(model = computeSS_plasconc,
                                             levels = 10,
                                             grid.jump = 1),
                             binf = parsbinf,
-                            bsup = parsbsup)
+                            bsup = parsbsup,
+                            scale = TRUE)
 end_pconc <- Sys.time()
 print(end_pconc)
 print(difftime(end_pconc, start_pconc, units= "secs"))
@@ -49,7 +50,8 @@ x_interconc <- morris(model = computeSS_interconc,
                                             levels = 10,
                                             grid.jump = 1),
                             binf = parsbinf,
-                            bsup = parsbsup)
+                            bsup = parsbsup,
+                            scale = TRUE)
 end_iconc <- Sys.time()
 print(end_iconc)
 print(difftime(end_iconc, start_iconc, units= "secs"))
@@ -71,7 +73,8 @@ x_muscle <- morris(model = computeSS_muscleconc,
                                             levels = 10,
                                             grid.jump = 1),
                             binf = parsbinf,
-                            bsup = parsbsup)
+                            bsup = parsbsup,
+                            scale = TRUE)
 end_mconc <- Sys.time()
 print(end_mconc)
 print(difftime(end_mconc, start_mconc, units= "secs"))
@@ -93,7 +96,8 @@ x_amtgut <- morris(model = computeSS_amtgut,
                                             levels = 10,
                                             grid.jump = 1),
                             binf = parsbinf,
-                            bsup = parsbsup)
+                            bsup = parsbsup,
+                            scale = TRUE)
 end_amtgut <- Sys.time()
 print(end_amtgut)
 print(difftime(end_amtgut, start_agut, units= "secs"))
