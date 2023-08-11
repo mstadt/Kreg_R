@@ -13,7 +13,7 @@ set.seed(151)
 
 rval = 1000
 
-## This is for just one variable.... here is plasma conc, but can get others!
+# plasma concentration
 start_all <- Sys.time()
 start_pconc <- Sys.time()
 print(start_pconc)
@@ -29,8 +29,16 @@ x_plasconc <- morris(model = computeSS_plasconc,
 end_pconc <- Sys.time()
 print(end_pconc)
 print(difftime(end_pconc, start_pconc, units= "secs"))
+
+# compute mu, mu*, sigma
+x <- x_plasconc
+x_plasconc$mu <- apply(x$ee, 2, mean)
+x_plasconc$mu.star <- apply(x$ee, 2, function(x) mean(abs(x)))
+x_plasconc$sigma <- apply(x$ee, 2, sd)
 # NOTE: can used x_plasconc$ee to get the elementary effects
 # NOTE: I can get X by using x_plasconc$X
+
+# interstitial space conc
 start_iconc <- Sys.time()
 print(start_iconc)
 print('start inter conc morris method')
@@ -46,6 +54,13 @@ end_iconc <- Sys.time()
 print(end_iconc)
 print(difftime(end_iconc, start_iconc, units= "secs"))
 
+# compute mu, mu*, sigma
+x <- x_interconc
+x_interconc$mu <- apply(x$ee, 2, mean)
+x_interconc$mu.star <- apply(x$ee, 2, function(x) mean(abs(x)))
+x_interconc$sigma <- apply(x$ee, 2, sd)
+
+# muscle concentration
 start_mconc <- Sys.time()
 print(start_mconc)
 print('start muscle conc morris method')
@@ -61,7 +76,13 @@ end_mconc <- Sys.time()
 print(end_mconc)
 print(difftime(end_mconc, start_mconc, units= "secs"))
 
+# compute mu, mu*, sigma
+x <- x_muscle
+x_muscle$mu <- apply(x$ee, 2, mean)
+x_muscle$mu.star <- apply(x$ee, 2, function(x) mean(abs(x)))
+x_muscle$sigma <- apply(x$ee, 2, sd)
 
+# amount gut
 start_agut <- Sys.time()
 print(start_agut)
 print('start amt gut morris method')
@@ -76,12 +97,15 @@ x_amtgut <- morris(model = computeSS_amtgut,
 end_amtgut <- Sys.time()
 print(end_amtgut)
 print(difftime(end_amtgut, start_agut, units= "secs"))
+# compute mu, mu*, sigma
+x <- x_amtgut
+x_amtgut$mu <- apply(x$ee, 2, mean)
+x_amtgut$mu.star <- apply(x$ee, 2, function(x) mean(abs(x)))
+x_amtgut$sigma <- apply(x$ee, 2, sd)
 
 
 
-## Yay! This is working here! :)
-# this one gives mu, mu.star and sigma for each of the parameters
-# based on all of the variables
+# compute based on all variables
 start_allvars <- Sys.time()
 print(start_allvars)
 print('start all morris method')
@@ -100,9 +124,12 @@ end <- Sys.time()
 print(end)
 print(difftime(end, start_all, units= "mins"))
 
+# compute mu, mu*, sigma
+x <- x_all
+x_all$mu <- apply(x$ee, 2, mean)
+x_all$mu.star <- apply(x$ee, 2, function(x) mean(abs(x)))
+x_all$sigma <- apply(x$ee, 2, sd)
 
-# use all_SS_morris$ee to get elementary effects
-# use all_SS_morris$X to get X for the factors
 save_info = 1
 if (save_info) {
     today <- Sys.Date()
