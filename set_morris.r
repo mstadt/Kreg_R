@@ -17,7 +17,11 @@ testpars <- c("V_plasma",
             "B_cdKsec",
             "A_cdKreab",
             "A_insulin",
-            "B_insulin"
+            "B_insulin",
+            "KMuscleBase",
+            "Kecf_base",
+            "Phi_Kin_ss",
+            "ALD_eq"
             )
 
 parsbinf <- c(0.75 * p$V_plasma, # V_plasma
@@ -38,7 +42,11 @@ parsbinf <- c(0.75 * p$V_plasma, # V_plasma
             0.75 * p$B_cdKsec, # B_cdKsec
             0.85 * p$A_cdKreab, # A_cdKreab
             0.75 * p$A_insulin, # A_insulin
-            0.75 * p$B_insulin # B_insulin
+            0.75 * p$B_insulin, # B_insulin
+            120, # KMuscleBase, low end of regular K
+            3.5, # Kecf_base, low normal range
+            50/1440, # PhiKinss, low range normal
+            70, #ALD_eq, low normal ALD range
             )
 
 parsbsup <- c(1.25 * p$V_plasma, # V_plasma
@@ -59,5 +67,9 @@ parsbsup <- c(1.25 * p$V_plasma, # V_plasma
             1.25 * p$B_cdKsec, # B_cdKsec
             1.15 * p$A_cdKreab, # A_cdKreab
             1.25 * p$A_insulin, # A_insulin
-            1.25 * p$B_insulin # B_insulin
+            1.25 * p$B_insulin, # B_insulin
+            140, # KMuscleBase, high normal intracellular
+            5.0, # Kecf_base, high normal plasma K
+            150/1440, # Phi_Kin_ss
+            1.25 * p$ALD_eq # ALD_eq
             )
