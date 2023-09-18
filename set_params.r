@@ -5,8 +5,8 @@ set_params <- function() {
     # MKgutSS <- (0.9 * PhiKinSS) / kgut
     # KMuscleBase = 130
     # KECF_base <- 4.2
-    #VMAX = 130
-    #KM = 1.4
+    # VMAX = 130
+    # KM = 1.4
     list(
         V_plasma = 4.5,
         V_inter = 10,
