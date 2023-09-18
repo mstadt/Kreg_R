@@ -13,7 +13,6 @@ set_params <- function() {
         V_muscle = 24,
         m_K_ALDO = 0.5,
         ALD_eq = 85,
-        Phi_Kin_ss = 0.04861111,
         kgut = 0.01,
         fecal_exc = 0.1,
         P_ECF = 0.3,
