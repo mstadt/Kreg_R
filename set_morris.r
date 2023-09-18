@@ -45,8 +45,8 @@ parsbinf <- c(0.75 * p$V_plasma, # V_plasma
             0.75 * p$B_insulin, # B_insulin
             120, # KMuscleBase, low end of regular K
             3.5, # Kecf_base, low normal range
-            50/1440, # PhiKinss, low range normal
-            70, #ALD_eq, low normal ALD range
+            50 / 1440, # PhiKinss, low range normal
+            70 #ALD_eq, low normal ALD range
             )
 
 parsbsup <- c(1.25 * p$V_plasma, # V_plasma
@@ -70,6 +70,6 @@ parsbsup <- c(1.25 * p$V_plasma, # V_plasma
             1.25 * p$B_insulin, # B_insulin
             140, # KMuscleBase, high normal intracellular
             5.0, # Kecf_base, high normal plasma K
-            150/1440, # Phi_Kin_ss
+            150 / 1440, # Phi_Kin_ss
             1.25 * p$ALD_eq # ALD_eq
             )
