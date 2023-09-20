@@ -32,7 +32,7 @@ Kmod_res_morris = ODEmorris(mod = mealmod_KClOnly,
 end <- Sys.time()
 print(end)
 
-print(difftime(end, start, units= "secs"))
+print(difftime(end, start, units= "mins"))
 
 save_info = 1
 if (save_info) {
