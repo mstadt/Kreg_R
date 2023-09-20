@@ -10,7 +10,7 @@ model_eqns_baseSS <- function(Time, State, Pars) {
     with(as.list(c(State, Pars)), {
         #KMuscleBase = 130
         #Kecf_base = 4.2
-        Phi_Kin_ss = 70/1440
+        # Phi_Kin_ss = 70/1440
         #ALD_eq = 85
 
         # set parameters that are fixed (not in Morris)
