@@ -15,7 +15,7 @@ model_eqns_baseSS <- function(Time, State, Pars) {
 
         # set parameters that are fixed (not in Morris)
         fecal_exc = 0.1 # leave as fixed
-        etapsKreab = 0.92
+        # etapsKreab = 0.92
 
         amt_gutSS <- ((1 - fecal_exc) * Phi_Kin_ss) / kgut
         NKAbase <- (Vmax*Kecf_base)/(Km + Kecf_base)
