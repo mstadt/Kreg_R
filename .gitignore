@@ -3,3 +3,5 @@ figures/*
 MorrisResults/*
 tips.txt
 *.asv
+*.csv
+*.RData

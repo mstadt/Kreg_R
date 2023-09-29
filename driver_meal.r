@@ -1,6 +1,7 @@
 # Run a meal experiment based on given settings
 library(deSolve)
 library(rootSolve)
+library(ggplot2)
 
 # get relevant functions
 source("set_params.r")
@@ -16,6 +17,7 @@ GI_FF     <- 1 # do GI FF effect
 Ins       <- 1 # do insulin effect
 K_amt     <- 0 # amount of K in meal (35 mEq is Preston exp)
 MKX_opt   <- 0 # optional MK cross talk
+HighKSim_opt  <- 0 # optional high K sim (based on Wang et al 2023)
 
 meal_time = 30 # time of meal
 ##---------------------------
@@ -25,32 +27,33 @@ meal_time = 30 # time of meal
 IC <- init_conds()
 params <- set_params()
 
-init_guess <- c(IC$amt_gut,
-                IC$amt_plas,
-                IC$amt_inter,
-                IC$amt_muscle)
+init_guess <- c(amt_gut = IC$amt_gut,
+                conc_plas = IC$conc_plas,
+                conc_inter = IC$conc_inter,
+                conc_muscle = IC$conc_muscle)
+
 set_opts <- list(SS = 1,
                  doFF = GI_FF,
                  doins = Ins,
                  Kin = 0,
-                 MKX = MKX_opt)
+                 MKX = MKX_opt,
+                 HighKSim = HighKSim_opt)
 
 ST <- stode(init_guess, time = 0, func = model_eqns,
-                         parms = params, opts = set_opts)
+                         parms = params, opts = set_opts,
+                         ynames = FALSE)
 
-## update IC with SS initial conditions
+# ## update IC with SS initial conditions
 IC$amt_gut <- ST$y[1]
-IC$amt_plas <- ST$y[2]
-IC$amt_inter <- ST$y[3]
-IC$amt_muscle <- ST$y[4]
+IC$conc_plas <- ST$y[2]
+IC$conc_inter <- ST$y[3]
+IC$conc_muscle <- ST$y[4]
 
-# ST$yconc <- list(Kplas = ST$y[2]/params$V_plasma,
-#                  Kinter = ST$y[3]/params$V_inter,
-#                  Kmuscle = ST$y[4]/params$V_muscle)
-# print(sprintf("Steady state concentrations"))
-# print(sprintf("Plasma [K]: %0.3f", ST$yconc$Kplas))
-# print(sprintf("Inter [K]:  %0.3f", ST$yconc$Kinter))
-# print(sprintf("Muslce [K]: %0.3f", ST$yconc$Kmuscle))
+
+print(sprintf("Steady state concentrations"))
+print(sprintf("Plasma [K]: %0.3f", ST$y[2]))
+print(sprintf("Inter [K]:  %0.3f", ST$y[3]))
+print(sprintf("Muslce [K]: %0.3f", ST$y[4]))
 
 
 # Run simulations
@@ -135,28 +138,48 @@ out_postmeal <- as.data.frame(lsoda(
 
 kmod_postmeal <- kmod # save kmod if want later
 
+sim_results <- rbind(outfast, outmeal, out_postmeal) # append sims to one df
+
+## Plot results
+plt_res = as.integer(readline(prompt = 'do you want to plot? '))
+if (plt_res) {
+p1 <- plot(sim_results[['amt_gut']], xlab = 'Time', ylab = 'amt_gut')
+p2 <- plot(sim_results[['conc_plas']], xlab = 'Time', ylab = 'conc_plas')
+p3 <- plot(sim_results[['conc_inter']], xlab = 'Time', ylab = 'conc_inter')
+p4 <- plot(sim_results[['conc_muscle']], xlab = 'Time', ylab = 'conc_muscle')
+}
+# library(patchwork)
+# p1 + p2 + p3 + p4
+# library(reshape)
+# library(lattice)
+# print(xyplot(value~time|variable,
+#        data=melt(sim_results,measure.vars=c("amt_gut","conc_plas","conc_inter","conc_muscle",kmod$cmt),id.vars="time"),
+#        type='l',par.strip.text=list(cex=0.8),
+#        scales=list(y=list(relation='free')),
+#        xlab="Time (days)",
+#        ylab="conc"
+#        )
+# )
+
 ## Save results
 save_info = as.integer(readline(prompt = 'do you want to save? '))
 if (save_info) {
-    sim_results <- rbind(outfast, outmeal, out_postmeal) # append sims to one df
+
     notes = readline(prompt = "notes for filename: ")
     today <- Sys.Date()
     fname <- paste(today, "_MealSim_", "Kin-", toString(K_amt),
                     "_doIns-", toString(Ins),
                     "_notes-", notes,
                     sep = "")
-    fcsv <- paste("./results/", fname, ".csv", sep = "")
+    fcsv <- paste("./results_sim/", fname, ".csv", sep = "")
     write.csv(sim_results, file = fcsv)
 
-    f1 <- paste("./results/", fname, ".RData", sep = "")
+    f1 <- paste("./results_sim/", fname, ".RData", sep = "")
     save.image(file = f1) # save details of workspace
 
-    f2 <- paste("./results/", "params_", fname, ".csv", sep = "")
+    f2 <- paste("./results_sim/", "params_", fname, ".csv", sep = "")
     write.csv(as.data.frame(params), file = f2)
 
     print("results saved to:")
     print(sprintf("%s.csv", fname))
 }
-
-
-

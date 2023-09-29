@@ -8,10 +8,7 @@ mealmod_MealKCl <- function(Time, State, Pars) {
 
     #dydt <- c()
     with(as.list(c(State, Pars)), {
-        # KMuscleBase = 130
-        # Kecf_base = 4.2
         Phi_Kin_ss = 70/1440
-        # ALD_eq = 85
 
         # set parameters that are fixed (not in Morris)
         amt_gutSS <- (0.9 * Phi_Kin_ss) / kgut
@@ -19,7 +16,6 @@ mealmod_MealKCl <- function(Time, State, Pars) {
         P_muscle <- NKAbase/(KMuscleBase - Kecf_base)
 
         fecal_exc = 0.1 # leave as fixed
-        # etapsKreab = 0.92
 
         # simulation settings
         meal_start <- 100 + 6*60 # time meal starts
@@ -100,7 +96,7 @@ mealmod_MealKCl <- function(Time, State, Pars) {
         dplas <- (1 / V_plasma) * (Gut2plasma - Plas2ECF - UrineK)
 
         # amt_inter (Interstitial K)
-        rho_al = (66.4 + 0.273 * C_al)/89.6050
+        rho_al = (66.4 + 0.273 * C_al) / 89.6050
 
         # insulin
         if (do_insulin){
