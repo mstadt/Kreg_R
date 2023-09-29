@@ -8,26 +8,26 @@ model_eqns_baseSS <- function(Time, State, Pars) {
 
     #dydt <- c()
     with(as.list(c(State, Pars)), {
-        KMuscleBase = 130
-        Kecf_base = 4.2
+        #KMuscleBase = 130
+        #Kecf_base = 4.2
         Phi_Kin_ss = 70/1440
-        ALD_eq = 85
+        #ALD_eq = 85
 
         # set parameters that are fixed (not in Morris)
-        amt_gutSS <- (0.9 * Phi_Kin_ss) / kgut
+        fecal_exc = 0.1 # leave as fixed
+        # etapsKreab = 0.92
+
+        amt_gutSS <- ((1 - fecal_exc) * Phi_Kin_ss) / kgut
         NKAbase <- (Vmax*Kecf_base)/(Km + Kecf_base)
         P_muscle <- NKAbase/(KMuscleBase - Kecf_base)
 
-        fecal_exc = 0.1 # leave as fixed
-        etapsKreab = 0.92
-
         # simulation settings
-        meal_start <- 100 + 6*60 # time meal starts
+        meal_start <- 100 + 6 * 60 # time meal starts
         meal_time <- 30 # meal duration
 
         SS <- 1 # steady state
         do_FF <- 1
-        do_insulin <- 1 # 
+        do_insulin <- 1 
         MKX <- 0
         Kintake = Phi_Kin_ss
         # concentrationsr)

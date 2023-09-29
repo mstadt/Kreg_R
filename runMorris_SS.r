@@ -11,7 +11,7 @@ source("set_morris.r")
 
 set.seed(151)
 
-rval = 1000
+rval = 10000
 
 # plasma concentration
 start_all <- Sys.time()
